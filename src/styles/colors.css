@@ -1,0 +1,21 @@
+:root {
+  --white: #ffffff;
+  --black: #0f0f0f;
+  --off-black: #1e1e1e;
+
+  /* Bold Palette */
+  --red-bold: #ff3a5e;
+  --green-bold: #14f0bc;
+  --blue-bold: #3a86ff;
+  --gold: #ffd23f;
+
+  /* Vibrant Palette */
+  --yellow: #f7ff0e;
+  --purple-vib: #9727ff;
+  --blue-vib: #0eb7ff;
+  --green-vib: #07ff9b;
+
+  /* STP colors */
+  --blue-stp: #79cbf2;
+  --red-stp: #c02a33;
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="146" height="136"><svg viewBox="0 0 146 136" version="1.1" id="SvgjsSvg1029" width="146" height="136" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <!-- Gradient Definitions -->
+  <defs id="SvgjsDefs1028">
+    <linearGradient id="SvgjsLinearGradient1027" x1="0" y1="0" x2="300" y2="300" gradientUnits="userSpaceOnUse" gradientTransform="translate(-77,-47)">
+      <stop offset="0%" stop-color="#0f172a" id="SvgjsStop1026"></stop>
+      <stop offset="100%" stop-color="#1e293b" id="SvgjsStop1025"></stop>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect x="-77" y="-47" width="300" height="300" fill="url(#bgGradient)" id="SvgjsRect1024" style="display:none;fill:url(#bgGradient)"></rect>
+  <!-- DK Logo -->
+  <g id="SvgjsG1023" transform="translate(8,8)">
+    <!-- D styled as a curly brace while keeping D shape -->
+    <path d="m 0,0 c 10,0 30,0 40,0 5,0 10,5 10,10 v 30 c 0,10 5,15 15,20 -10,5 -15,10 -15,20 v 30 c 0,5 -5,10 -10,10 -10,0 -30,0 -40,0" stroke="#ff3a5e" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round" id="SvgjsPath1022"></path>
+    <!-- Stem connecting D and K -->
+    <!--<path-->
+    <!--  d="M 65,60 H 80"-->
+    <!--  stroke="white"-->
+    <!--  stroke-width="16"-->
+    <!--  fill="none"-->
+    <!--  stroke-linecap="round"-->
+    <!--  id="path5"-->
+    <!--/>-->
+    <!-- K (closing bracket) -->
+    <path d="M 90,60 120,15" stroke="#ff3a5e" stroke-width="16" fill="none" stroke-linecap="round" id="SvgjsPath1021"></path>
+    <path d="m 90,60 40,45" stroke="#ff3a5e" stroke-width="16" fill="none" stroke-linecap="round" id="SvgjsPath1020"></path>
+  </g>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>

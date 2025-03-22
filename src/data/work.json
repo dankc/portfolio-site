@@ -1,0 +1,154 @@
+{
+  "samples": [
+    {
+      "type": "site",
+      "client": "The North Face",
+      "campaign": "Vectiv 2024",
+      "displayType": "site",
+      "src": {
+        "sm": ["static/images/tnf-vectiv-mb.png", "static/images/tnf-vectiv-mb.webp"],
+        "lg": ["static/images/tnf-vectiv-dt.png", "static/images/tnf-vectiv-dt.webp"]
+      },
+      "origin": "https://www.thenorthface.com/en-us/vectiv",
+      "width": 1440,
+      "height": "auto"
+    },
+    {
+      "type": "site",
+      "client": "The North Face",
+      "campaign": "Summit Series 2024",
+      "displayType": "site",
+      "src": {
+        "sm": ["static/images/tnf-summit-series-mb.png", "static/images/tnf-summit-series-mb.webp"],
+        "lg": ["static/images/tnf-summit-series-dt.png", "static/images/tnf-summit-series-dt.webp"]
+      },
+      "origin": "https://www.thenorthface.com/en-us/collections/summit-series",
+      "width": 1440,
+      "height": "auto"
+    },
+    {
+      "type": "site",
+      "client": "The North Face",
+      "campaign": "Int'l Women's Day 2024",
+      "displayType": "site",
+      "src": {
+        "sm": ["static/images/tnf-womens-day-mb.png", "static/images/tnf-womens-day-mb.webp"],
+        "lg": ["static/images/tnf-womens-day-dt.png", "static/images/tnf-womens-day-dt.webp"]
+      },
+      "origin": "https://www.thenorthface.com/en-us/collections/international-womens-day",
+      "width": 1440,
+      "height": "auto"
+    },
+    {
+      "type": "site",
+      "client": "The North Face",
+      "campaign": "Black History Month 2024",
+      "displayType": "site",
+      "src": {
+        "sm": ["static/images/tnf-black-history-mb.png", "static/images/tnf-black-history-mb.webp"],
+        "lg": ["static/images/tnf-black-history-dt.png", "static/images/tnf-black-history-dt.webp"]
+      },
+      "origin": "https://www.thenorthface.com/en-us/collections/black-history-month",
+      "width": 1440,
+      "height": "auto"
+    },
+    {
+      "type": "site",
+      "client": "Vans",
+      "campaign": "House of Vans",
+      "displayType": "site",
+      "src": {
+        "sm": ["static/images/vans-hov-mb.png", "static/images/vans-hov-mb.webp"],
+        "lg": ["static/images/vans-hov-dt.png", "static/images/vans-hov-dt.webp"]
+      },
+      "origin": "https://www.vans.com/en-us/house-of-vans",
+      "width": 1440,
+      "height": "auto"
+    },
+    {
+      "type": "site",
+      "client": "Vans",
+      "campaign": "Sustainability",
+      "displayType": "site",
+      "src": {
+        "sm": [
+          "static/images/vans-sustainability-mb.png",
+          "static/images/vans-sustainability-mb.webp"
+        ],
+        "lg": [
+          "static/images/vans-sustainability-dt.png",
+          "static/images/vans-sustainability-dt.webp"
+        ]
+      },
+      "origin": "https://www.vans.com/en-us/sustainability",
+      "width": 1440,
+      "height": "auto"
+    },
+    {
+      "type": "email",
+      "client": "Bermuda",
+      "displayType": "responsive email",
+      "src": {
+        "lg": ["static/images/bmd_base-email-thumb.jpg"],
+        "sm": ["static/images/bmd_base-email-thumb.jpg"]
+      },
+      "width": 640,
+      "height": "auto"
+    },
+    {
+      "type": "email",
+      "client": "The Outer Banks",
+      "displayType": "responsive email",
+      "src": {
+        "lg": ["static/images/obx-pug-thumb.jpg"],
+        "sm": ["static/images/obx-pug-thumb.jpg"]
+      },
+      "width": 640,
+      "height": "auto"
+    },
+    {
+      "type": "email",
+      "client": "Meritage",
+      "displayType": "responsive email",
+      "src": {
+        "lg": ["static/images/pac-email.jpg"],
+        "sm": ["static/images/pac-email.jpg"]
+      },
+      "width": 640,
+      "height": "auto"
+    },
+    {
+      "type": "banner",
+      "client": "San Jose",
+      "displayType": "banner",
+      "src": {
+        "lg": ["static/images/sjc_300-banner.png"],
+        "sm": ["static/images/sjc_300-banner.png"]
+      },
+      "width": 300,
+      "height": 250
+    },
+    {
+      "type": "banner",
+      "client": "The Outer Banks",
+      "displayType": "expandable rich media banner",
+      "src": {
+        "lg": ["static/images/obx_rich-300.png"],
+        "sm": ["static/images/obx_rich-300.png"]
+      },
+      "width": 1150,
+      "height": 750
+    },
+    {
+      "type": "banner",
+      "client": "Monterey",
+      "displayType": "banner",
+      "src": {
+        "lg": ["static/images/mon_600-banner.png"],
+        "sm": ["static/images/mon_600-banner.png"]
+      },
+      "width": 300,
+      "height": 600
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('static/fonts/IBM Plex/IBMPlexSans-Regular.eot') format('embedded-opentype');
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('static/fonts/IBM Plex/IBMPlexSans-Bold.eot') format('embedded-opentype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('static/fonts/IBM Plex/IBMPlexMono-Regular.eot') format('embedded-opentype');
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('static/fonts/IBM Plex/IBMPlexMono-Bold.eot') format('embedded-opentype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+:root {
+  --f-sans: 'IBM Plex Sans', sans-serif;
+  --f-mono: 'IBM Plex Mono', monospace;
+}

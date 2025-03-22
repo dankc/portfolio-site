@@ -1,0 +1,63 @@
+@keyframes scaleFromCenter {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes rotator {
+  0% {
+    transform: translateY(103%);
+  }
+  13% {
+    filter: blur(5px);
+    transform: translateY(103%);
+  }
+  14% {
+    filter: none;
+    transform: translateY(0);
+  }
+  86% {
+    filter: none;
+    transform: translateY(0);
+  }
+  87% {
+    filter: blur(5px);
+    transform: translateY(-103%);
+  }
+  100% {
+    transform: translateY(-103%);
+  }
+}
+
+@keyframes rotatorEnd {
+  /* same as the other only without the exit at the end */
+  0% {
+    transform: translateY(103%);
+  }
+  13% {
+    filter: blur(5px);
+    transform: translateY(103%);
+  }
+  14% {
+    filter: none;
+    transform: translateY(0);
+  }
+  86% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
