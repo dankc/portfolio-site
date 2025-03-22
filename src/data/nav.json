@@ -1,0 +1,24 @@
+{
+  "links": [
+    {
+      "name": "feat-project",
+      "text": "Feat. Project",
+      "display": "mobile"
+    },
+    {
+      "name": "services",
+      "text": "Services",
+      "display": "mobile"
+    },
+    {
+      "name": "work",
+      "text": "Work",
+      "display": "always"
+    },
+    {
+      "name": "about",
+      "text": "About",
+      "display": "always"
+    }
+  ]
+}

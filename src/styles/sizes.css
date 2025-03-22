@@ -1,0 +1,34 @@
+:root {
+  /* Global Sizes */
+  --max-content-width: 1440px;
+  --gutter: 25px;
+  --section-gap: 80px;
+  --navHeight: 56px;
+  --footerHeight: 70px;
+
+  @media (min-width: 480px) {
+    --gutter: 50px;
+    --section-gap: 160px;
+  }
+
+  /* Breakpoints */
+  --sm: 'min-width: 480px';
+  --md: 'min-width: 768px';
+  --lg: 'min-width: 1140px';
+  --non-retina: 'screen and (-webkit-max-device-pixel-ratio: 1)';
+  --retina: 'screen and (-webkit-min-device-pixel-ratio: 2)';
+
+  /* Text */
+  --baseline-font-size: 16px;
+
+  /* Shape */
+  --angle-depth: 100px;
+  --parallelogram-depth: 10px;
+  --angle-shape: polygon(0 0, 100% 0, calc(100% - var(--angle-depth)) 100%, 0 100%);
+  --parallelogram-shape: polygon(
+    var(--parallelogram-depth) 0,
+    100% 0,
+    calc(100% - var(--parallelogram-depth)) 100%,
+    0 100%
+  );
+}

@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "stylelint-prettier/recommended"
+  ],
+  "plugins": [
+    "stylelint-selector-bem-pattern",
+    "stylelint-prettier"
+  ],
+  "customSyntax": "postcss-html",
+  "rules": {}
+}
