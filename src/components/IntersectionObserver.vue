@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-  // @@TODO do I change this to emitting events when it's entering and exiting?
   import { onBeforeUnmount, onMounted } from 'vue';
 
   const {

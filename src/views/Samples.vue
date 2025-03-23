@@ -3,9 +3,7 @@
     <section class="samples" ref="workRef" id="work">
       <Container class="samples__container">
         <h2 class="samples__heading">Selected Work</h2>
-        <!--<p class="samples__paragraph">{{ body }}</p>-->
         <div class="samples__inner">
-          <!--@@TODO change this to a tabbed view for the different "categories"-->
           <ul class="samples__grid">
             <li
               v-for="(sample, index) in samples"
