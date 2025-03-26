@@ -66,8 +66,9 @@
 </template>
 
 <script setup lang="ts">
+  import { matomoKey } from 'vue-matomo';
   import type { Ref } from 'vue';
-  import { ref } from 'vue';
+  import { ref, inject } from 'vue';
   import { useGlobalStore } from '@/stores/global.ts';
   import type { WorkData } from '@/types/work';
   import { samples } from '@/data/work.json';
@@ -78,14 +79,21 @@
 
   const { changeActiveRoute, toggleModal } = useGlobalStore();
 
+  const matomo = inject<Ref>(matomoKey);
   const workRef = ref();
   const selectedWork: Ref<WorkData | undefined> = ref(undefined);
 
   function openModal(data: WorkData): void {
+    matomo?.value?.trackEvent(
+      'Modal',
+      'Open',
+      `${data.client}-${data.type}-${data.campaign || ''}`
+    );
     toggleModal();
     selectedWork.value = data;
   }
   function closeModal(): void {
+    matomo?.value?.trackEvent('Modal', 'Close');
     toggleModal();
     selectedWork.value = undefined;
   }
@@ -145,6 +153,7 @@
         background-color: var(--off-black);
         max-height: 200px;
         overflow: hidden;
+        cursor: pointer;
       }
 
       img {

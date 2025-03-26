@@ -22,10 +22,11 @@
             class="nav__item"
             :class="{ active: name === activeRoute, 'dt-hidden': display === 'mobile' }"
             :href="`#${name}`"
+            @click="track(`${name} Link`)"
           >
             {{ text }}
           </a>
-          <a class="nav__item" href="mailto:dankc@pm.me">Contact</a>
+          <a class="nav__item" href="mailto:dankc@pm.me" @click="track('Contact Link')">Contact</a>
         </nav>
       </div>
     </Container>
@@ -33,13 +34,15 @@
 </template>
 
 <script setup lang="ts">
-  import { onBeforeUnmount, onMounted, ref } from 'vue';
+  import { inject, onBeforeUnmount, onMounted, type Ref, ref } from 'vue';
   import { storeToRefs } from 'pinia';
+  import { matomoKey } from 'vue-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
   import { links } from '@/data/nav.json';
   import IconLogoMonoWhite from '@/components/icons/IconLogoMonoWhite.vue';
   import Container from './Container.vue';
 
+  const matomo = inject<Ref>(matomoKey);
   const globalStore = useGlobalStore();
   const { activeRoute } = storeToRefs(globalStore);
   const isMenuOpen = ref(false);
@@ -59,6 +62,10 @@
       top: 0,
       behavior: _isReducedMotion ? 'auto' : 'smooth',
     });
+  };
+
+  const track = (description: string) => {
+    matomo?.value?.trackEvent('Navigation', 'Click', description);
   };
 
   onMounted(() => {
@@ -203,21 +210,6 @@
         background-color: transparent;
         backdrop-filter: initial;
       }
-
-      /*&::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: -1;
-      backdrop-filter: blur(3px);
-
-      @media (min-width: 600px) {
-        backdrop-filter: initial;
-      }
-    }*/
 
       &.open {
         opacity: 1;

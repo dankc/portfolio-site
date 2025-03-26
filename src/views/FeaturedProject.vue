@@ -17,10 +17,16 @@
           <!--  > npm i responsive-vid <span class="cursor"></span>-->
           <!--</code>-->
           <div class="feat-proj__buttons">
-            <a class="feat-proj__button button" href="https://www.npmjs.com/package/responsive-vid"
+            <a
+              class="feat-proj__button button"
+              href="https://www.npmjs.com/package/responsive-vid"
+              @click="track('NPM Page')"
               >View NPM page</a
             >
-            <a class="feat-proj__button button" href="https://github.com/dankc/responsive-vid"
+            <a
+              class="feat-proj__button button"
+              href="https://github.com/dankc/responsive-vid"
+              @click="track('GitHub Page')"
               >View Code on GitHub</a
             >
           </div>
@@ -40,19 +46,25 @@
 </template>
 
 <script setup lang="ts">
+  import { inject, type Ref, ref } from 'vue';
+  import { matomoKey } from 'vue-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
-  import { ref } from 'vue';
   import { useClipboard } from '@/composables/useClipboard.ts';
   import Container from '@/components/Container.vue';
   import IntersectionObserver from '@/components/IntersectionObserver.vue';
 
   const { copyToClipboard } = useClipboard();
   const { changeActiveRoute } = useGlobalStore();
+  const matomo = inject<Ref>(matomoKey);
   const featProjRef = ref();
 
   function requireImage(url: string): string {
     return `${url}`;
   }
+
+  const track = (description: string) => {
+    matomo?.value?.trackEvent('Button', 'Click', `Featured Project - ${description}`);
+  };
 
   const callback: IntersectionObserverCallback = (entries) => {
     entries.forEach((entry) => {

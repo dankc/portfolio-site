@@ -1,5 +1,5 @@
 <template>
-  <Nav ref="global-nav" />
+  <Nav ref="global-nav" :class="{ 'modal-open': isModalOpen }" />
   <main
     class="main"
     :class="{ 'modal-open': isModalOpen }"
@@ -15,7 +15,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, useTemplateRef, onMounted, type ComponentInstance } from 'vue';
+  import { inject, ref, useTemplateRef, onMounted, type ComponentInstance, type Ref } from 'vue';
+  import { matomoKey } from 'vue-matomo';
   import { storeToRefs } from 'pinia';
   import { useGlobalStore } from '@/stores/global';
   import { useHeaderHeight } from '@/composables/useHeaderHeight.ts';
@@ -28,6 +29,7 @@
   import WorksView from '@/views/Samples.vue';
   import Features from '@/views/Services.vue';
 
+  const matomo = inject<Ref>(matomoKey);
   const { isModalOpen } = storeToRefs(useGlobalStore());
   const { getHeaderHeight } = useHeaderHeight();
   const { setMeta } = useMeta();
@@ -36,7 +38,18 @@
     description: 'Portfolio website of Dan Kiser, Senior Front-End Developer',
     keywords: 'Senior Front-End Developer, Senior Front-End Engineer, Web Developer',
     title: 'Dan Kiser | Sr. FE Dev',
-    image: 'static/img/dk-monogram-bg.svg',
+    // Social tags
+    'og:locale': 'en-us',
+    'og:description': 'Portfolio website of Dan Kiser, Senior Front-End Developer',
+    'og:title': 'Dan Kiser | Sr. FE Dev',
+    'og:url': 'https://kiser.codes',
+    'og:image': '/static/img/rotated-dk-monogram-og-img.png',
+    'og:type': 'website',
+    'twitter:domain': 'kiser.codes',
+    'twitter:url': 'https://kiser.codes',
+    'twitter:title': 'Dan Kiser | Sr. FE Dev',
+    'twitter:description': 'Portfolio website of Dan Kiser, Senior Front-End Developer',
+    'twitter:image': '/static/img/rotated-dk-monogram-og-img.png',
   });
 
   const globalNav = useTemplateRef('global-nav');
@@ -45,5 +58,7 @@
   onMounted(() => {
     headerHeight.value =
       getHeaderHeight((globalNav.value as ComponentInstance<HTMLElement>).$el) || 0;
+    // Ugly but temporary - need to add event to forked package
+    setTimeout(() => matomo?.value?.trackPageView('Home Page'), 500);
   });
 </script>

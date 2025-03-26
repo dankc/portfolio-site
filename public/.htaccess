@@ -2,11 +2,16 @@
   # Turn on rewite and set base path
   RewriteEngine On
   RewriteBase /
+  # Block AI Bots
+  RewriteCond %{HTTP_USER_AGENT} (GPTBot|ClaudeBot|CCBot|Bytespider|PerplexityBot|YouBot|OAI-SearchBot) [NC]
+  RewriteRule ^ - [F]
   # Force non-www and set redirect to non-www for SEO
   RewriteCond %{HTTP_HOST} ^www\.kiser\.codes [NC]
   RewriteRule ^(.*)$ https://kiser.codes/$1 [R=301,L]
   # Do nothing if request is for index.html
   RewriteRule ^index\.html$ - [L]
+  # Don't go here
+  RewriteCond %{REQUEST_URI} !^/analytics/
   # Check if request is file name or directory and redirect to index.html if neither (for client-side routing)
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
