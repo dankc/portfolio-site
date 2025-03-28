@@ -12,21 +12,20 @@
 </template>
 
 <script setup lang="ts">
-  import { inject, type Ref } from 'vue';
   import { storeToRefs } from 'pinia';
+  import { useMatomo } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
   import { useMeta } from '@/composables/useMeta.ts';
   import { useParsePlaceholders } from '@/composables/useParsePlaceholders.ts';
   import { heading, paragraph, list, optOutButton } from '@/data/privacy-policy.json';
-  import { matomoKey } from 'vue3-matomo';
 
-  const matomo = inject<Ref>(matomoKey);
+  const matomo = useMatomo();
   const { setMeta } = useMeta();
   const { isUserOptedOut } = storeToRefs(useGlobalStore());
   const { parseLinks } = useParsePlaceholders();
   const parsedCopy = parseLinks(paragraph);
   const optOut = () => {
-    matomo?.value?.optUserOut();
+    matomo.value?.optUserOut();
     isUserOptedOut.value = true;
   };
 

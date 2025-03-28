@@ -1,4 +1,5 @@
 import pluginVue from 'eslint-plugin-vue';
+import stylisticTs from '@stylistic/eslint-plugin-ts';
 import vueTsEslintConfig from '@vue/eslint-config-typescript';
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
 
@@ -19,8 +20,18 @@ export default [
   skipFormatting,
 
   {
+    plugins: {
+      '@stylistic/ts': stylisticTs,
+    },
+    rules: {
+      '@/operator-linebreak': ['warn', 'before'],
+    },
+  },
+
+  {
     rules: {
       'vue/multi-word-component-names': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
 ];

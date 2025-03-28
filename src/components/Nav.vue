@@ -39,17 +39,17 @@
 </template>
 
 <script setup lang="ts">
-  import { inject, onBeforeUnmount, onMounted, type Ref, ref } from 'vue';
+  import { onBeforeUnmount, onMounted, ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useRouter } from 'vue-router';
-  import { matomoKey } from 'vue3-matomo';
+  import { useMatomo } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
   import { useScroll } from '@/composables/useScroll.ts';
   import { links } from '@/data/nav.json';
   import IconLogoMonoWhite from '@/components/icons/IconLogoMonoWhite.vue';
   import Container from './Container.vue';
 
-  const matomo = inject<Ref>(matomoKey);
+  const matomo = useMatomo();
   const { scrollTop } = useScroll();
   const { activeRoute, isUserOptedOut } = storeToRefs(useGlobalStore());
   const { currentRoute, push } = useRouter();
@@ -74,7 +74,7 @@
   };
 
   const track = (description: string) => {
-    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Navigation', 'Click', description);
+    if (!isUserOptedOut.value) matomo.value?.trackEvent('Navigation', 'Click', description);
   };
 
   onMounted(() => {

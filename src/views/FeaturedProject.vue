@@ -39,9 +39,9 @@
 </template>
 
 <script setup lang="ts">
-  import { inject, type Ref, ref } from 'vue';
+  import { ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { matomoKey } from 'vue3-matomo';
+  import { useMatomo } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
   import { useClipboard } from '@/composables/useClipboard.ts';
   import Container from '@/components/Container.vue';
@@ -51,7 +51,7 @@
   const { changeActiveRoute } = useGlobalStore();
   const { isUserOptedOut } = storeToRefs(useGlobalStore());
 
-  const matomo = inject<Ref>(matomoKey);
+  const matomo = useMatomo();
   const featProjRef = ref();
 
   function requireImage(url: string): string {
@@ -59,7 +59,7 @@
   }
 
   const track = (description: string) => {
-    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Button', 'Click', `Featured Project - ${description}`);
+    if (!isUserOptedOut.value) matomo.value?.trackEvent('Button', 'Click', `Featured Project - ${description}`);
   };
 
   const callback: IntersectionObserverCallback = (entries) => {
