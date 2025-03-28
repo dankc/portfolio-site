@@ -7,10 +7,7 @@ const head = document.head;
 
 const isOg = (key: string) => key.startsWith('og:');
 const isNotSocial = (key: string) =>
-  key !== 'title' &&
-  !isOg(key) &&
-  !xNames.includes(`twitter:${key}`) &&
-  !xProperties.includes(`twitter:${key}`);
+  key !== 'title' && !isOg(key) && !xNames.includes(`twitter:${key}`) && !xProperties.includes(`twitter:${key}`);
 
 function setMetaProperty(key: string, value: string) {
   const meta = document.createElement('meta');

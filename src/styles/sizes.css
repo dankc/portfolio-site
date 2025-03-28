@@ -25,10 +25,5 @@
   --angle-depth: 100px;
   --parallelogram-depth: 10px;
   --angle-shape: polygon(0 0, 100% 0, calc(100% - var(--angle-depth)) 100%, 0 100%);
-  --parallelogram-shape: polygon(
-    var(--parallelogram-depth) 0,
-    100% 0,
-    calc(100% - var(--parallelogram-depth)) 100%,
-    0 100%
-  );
+  --parallelogram-shape: polygon(var(--parallelogram-depth) 0, 100% 0, calc(100% - var(--parallelogram-depth)) 100%, 0 100%);
 }

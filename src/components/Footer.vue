@@ -20,8 +20,7 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { inject, type Ref } from 'vue';
-  import { matomoKey } from 'vue3-matomo';
+  import { useMatomo } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
   import Container from '@/components/Container.vue';
   import GitHub from '@/components/icons/IconGitHub.vue';
@@ -29,7 +28,7 @@
   import Email from '@/components/icons/IconEmail.vue';
   import IconPrivacyPolicy from '@/components/icons/IconPrivacyPolicy.vue';
 
-  const matomo = inject<Ref>(matomoKey);
+  const matomo = useMatomo();
   const { isUserOptedOut } = storeToRefs(useGlobalStore());
   const currentYear = new Date().getFullYear();
   const icons = [
@@ -49,7 +48,7 @@
   ];
 
   const track = (description: string) => {
-    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Footer', 'Click', description);
+    if (!isUserOptedOut.value) matomo.value?.trackEvent('Footer', 'Click', description);
   };
 </script>
 

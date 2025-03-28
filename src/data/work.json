@@ -71,14 +71,8 @@
       "campaign": "Sustainability",
       "displayType": "site",
       "src": {
-        "sm": [
-          "static/images/vans-sustainability-mb.png",
-          "static/images/vans-sustainability-mb.webp"
-        ],
-        "lg": [
-          "static/images/vans-sustainability-dt.png",
-          "static/images/vans-sustainability-dt.webp"
-        ]
+        "sm": ["static/images/vans-sustainability-mb.png", "static/images/vans-sustainability-mb.webp"],
+        "lg": ["static/images/vans-sustainability-dt.png", "static/images/vans-sustainability-dt.webp"]
       },
       "origin": "https://www.vans.com/en-us/sustainability",
       "width": 1440,

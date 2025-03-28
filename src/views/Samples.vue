@@ -56,9 +56,9 @@
 
 <script setup lang="ts">
   import type { Ref } from 'vue';
-  import { ref, inject } from 'vue';
+  import { ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { matomoKey } from 'vue3-matomo';
+  import { useMatomo } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
   import type { WorkData } from '@/types/work';
   import { samples } from '@/data/work.json';
@@ -69,18 +69,20 @@
 
   const { changeActiveRoute, toggleModal } = useGlobalStore();
 
-  const matomo = inject<Ref>(matomoKey);
+  const matomo = useMatomo();
   const { isUserOptedOut } = storeToRefs(useGlobalStore());
   const workRef = ref();
   const selectedWork: Ref<WorkData | undefined> = ref(undefined);
 
   function openModal(data: WorkData): void {
-    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Modal', 'Open', `${data.client}-${data.type}-${data.campaign || ''}`);
+    if (!isUserOptedOut.value) {
+      matomo.value?.trackEvent('Modal', 'Open', `${data.client}-${data.type}-${data.campaign || ''}`);
+    }
     toggleModal();
     selectedWork.value = data;
   }
   function closeModal(): void {
-    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Modal', 'Close');
+    if (!isUserOptedOut.value) matomo.value?.trackEvent('Modal', 'Close');
     toggleModal();
     selectedWork.value = undefined;
   }
