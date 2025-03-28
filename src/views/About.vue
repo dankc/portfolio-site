@@ -3,12 +3,7 @@
     <section class="about" id="about" ref="aboutRef">
       <div>
         <h2 class="about__heading">{{ heading }}</h2>
-        <p
-          class="about__paragraph"
-          v-for="(paragraph, index) in parsedParagraphs"
-          :key="index"
-          v-html="paragraph"
-        ></p>
+        <p class="about__paragraph" v-for="(paragraph, index) in parsedParagraphs" :key="index" v-html="paragraph"></p>
       </div>
       <div class="about__skills">
         <h3 class="about__skills-heading">{{ skillsHeading }}</h3>
@@ -27,40 +22,27 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useGlobalStore } from '@/stores/global.ts';
+  import { useParsePlaceholders, type PlaceHolderValues } from '@/composables/useParsePlaceholders.ts';
   import type { SkillPills } from '@/types/about';
   import { heading, paragraphs, skillsHeading, skillsList } from '@/data/about.json';
   import IntersectionObserver from '@/components/IntersectionObserver.vue';
   import SkillPill from '@/components/SkillPill.vue';
 
   const { changeActiveRoute } = useGlobalStore();
+  const { parseCopy } = useParsePlaceholders();
   const aboutRef = ref();
 
   const skills: SkillPills = skillsList;
   const timeDeveloping: number = new Date().getFullYear() - 2014;
   const timeWebDeveloping: number = new Date().getFullYear() - 2016;
   const timeWithVue: number = new Date().getFullYear() - 2018;
-  const placeholderValues: { [K: string]: number } = {
+  const placeholderValues: PlaceHolderValues = {
     timeDeveloping: timeDeveloping,
     timeWebDeveloping: timeWebDeveloping,
     timeWithVue: timeWithVue,
   };
 
-  const parseCopy = (copy: string): string => {
-    let parsedCopy = copy;
-    const placeholders = copy.match(new RegExp(/\$\{\w+}/, 'g')) || [];
-    const getPlaceholderValue = (placeholder: string): string => {
-      placeholder = placeholder.replace(new RegExp(/\$|\{|}/, 'g'), '');
-      return `${placeholderValues[placeholder]}`;
-    };
-
-    if (placeholders.length)
-      placeholders.forEach((placeholder) => {
-        parsedCopy = parsedCopy.replace(placeholder, getPlaceholderValue(placeholder));
-      });
-    return parsedCopy;
-  };
-
-  const parsedParagraphs = paragraphs.map((paragraph) => parseCopy(paragraph));
+  const parsedParagraphs = paragraphs.map((paragraph) => parseCopy(paragraph, placeholderValues));
 
   const callback: IntersectionObserverCallback = (entries) => {
     entries.forEach((entry) => {

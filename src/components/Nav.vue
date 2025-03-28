@@ -2,7 +2,7 @@
   <div class="nav" ref="nav">
     <Container>
       <div class="nav__inner">
-        <div class="nav__logo" @click="scrollToTop">
+        <div class="nav__logo" @click="logoClickEvent">
           <IconLogoMonoWhite />
         </div>
         <div class="nav__hamburger-container">
@@ -16,16 +16,22 @@
           ></button>
         </div>
         <nav class="nav__content" :class="{ open: isMenuOpen }">
-          <a
-            v-for="{ name, text, display } in links"
+          <router-link
+            v-for="{ name, text, display, to } in links"
             :key="name"
             class="nav__item"
-            :class="{ active: name === activeRoute, 'dt-hidden': display === 'mobile' }"
-            :href="`#${name}`"
+            :class="{
+              active: name === activeRoute,
+              'dt-hidden': display === 'mobile',
+            }"
+            :to="{
+              path: '/',
+              hash: to,
+            }"
           >
             {{ text }}
-          </a>
-          <a class="nav__item" href="mailto:dankc@pm.me">Contact</a>
+          </router-link>
+          <a class="nav__item" href="mailto:dankc@pm.me" @click="track('Contact Link')">Contact</a>
         </nav>
       </div>
     </Container>
@@ -33,15 +39,20 @@
 </template>
 
 <script setup lang="ts">
-  import { onBeforeUnmount, onMounted, ref } from 'vue';
+  import { inject, onBeforeUnmount, onMounted, type Ref, ref } from 'vue';
   import { storeToRefs } from 'pinia';
+  import { useRouter } from 'vue-router';
+  import { matomoKey } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
+  import { useScroll } from '@/composables/useScroll.ts';
   import { links } from '@/data/nav.json';
   import IconLogoMonoWhite from '@/components/icons/IconLogoMonoWhite.vue';
   import Container from './Container.vue';
 
-  const globalStore = useGlobalStore();
-  const { activeRoute } = storeToRefs(globalStore);
+  const matomo = inject<Ref>(matomoKey);
+  const { scrollTop } = useScroll();
+  const { activeRoute, isUserOptedOut } = storeToRefs(useGlobalStore());
+  const { currentRoute, push } = useRouter();
   const isMenuOpen = ref(false);
   const mediaQuery = window.matchMedia('(min-width: 600px)');
 
@@ -51,14 +62,19 @@
 
   const toggleMenu = (): void => {
     isMenuOpen.value = !isMenuOpen.value;
+    track('Hamburger Menu');
   };
 
-  const scrollToTop = (): void => {
-    const _isReducedMotion: boolean = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({
-      top: 0,
-      behavior: _isReducedMotion ? 'auto' : 'smooth',
-    });
+  const logoClickEvent = () => {
+    if (currentRoute.value.path === '/') {
+      scrollTop();
+    } else {
+      push('/');
+    }
+  };
+
+  const track = (description: string) => {
+    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Navigation', 'Click', description);
   };
 
   onMounted(() => {
@@ -75,11 +91,7 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    background: linear-gradient(
-      to right,
-      var(--red-bold) 50%,
-      rgb(from var(--black) r g b / 80%) 50%
-    );
+    background: linear-gradient(to right, var(--red-bold) 50%, rgb(from var(--black) r g b / 80%) 50%);
     backdrop-filter: blur(3px);
 
     &__inner {
@@ -203,21 +215,6 @@
         background-color: transparent;
         backdrop-filter: initial;
       }
-
-      /*&::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: -1;
-      backdrop-filter: blur(3px);
-
-      @media (min-width: 600px) {
-        backdrop-filter: initial;
-      }
-    }*/
 
       &.open {
         opacity: 1;

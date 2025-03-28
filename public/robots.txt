@@ -1,16 +1,62 @@
+# Allow US-based search engines
 User-agent: Googlebot
-Disallow:
+Disallow: /analytics/
+Allow: /
+
 User-agent: googlebot-mobile
-Disallow:
-User-agent: MSNBot
-Disallow:
+Disallow: /analytics/
+Allow: /
+
+User-agent: Bingbot
+Disallow: /analytics/
+Allow: /
+
 User-agent: Slurp
-Disallow:
-User-agent: ia_archiver
-Disallow:
-User-agent: yahoo-mmcrawler
-Disallow:
+Disallow: /analytics/
+Allow: /
+
+# Allow privacy-focused search engines
+User-agent: DuckDuckBot
+Disallow: /analytics/
+Allow: /
+
+User-agent: BraveBot
+Disallow: /analytics/
+Allow: /
+
+User-agent: StartpageBot
+Disallow: /analytics/
+Allow: /
+
+# Block non-US search engines
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
+
+# Block AI chatbots and crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+# Block all other crawlers
 User-agent: *
 Disallow: /
-Disallow: /cgi-bin/
-Disallow: /.ftp-deploy-sync-state.json

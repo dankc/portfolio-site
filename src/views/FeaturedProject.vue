@@ -8,19 +8,18 @@
             <br />Responsive-Vid
           </h2>
           <p class="feat-proj__paragraph">
-            A TypeScript-supported library for Vue 3, JavaScript modules, and browser scripts to
-            dynamically swap video sources and posters based on media queries. Perfect for
-            autoplaying background videos with varying file sizes or aspect ratios across viewport
-            widths—or any media query condition like resolution or orientation.
+            A TypeScript-supported library for Vue 3, JavaScript modules, and browser scripts to dynamically swap video sources
+            and posters based on media queries. Perfect for autoplaying background videos with varying file sizes or aspect ratios
+            across viewport widths—or any media query condition like resolution or orientation.
           </p>
           <!--<code @click="copyToClipboard('npm i responsive-vid')">-->
           <!--  > npm i responsive-vid <span class="cursor"></span>-->
           <!--</code>-->
           <div class="feat-proj__buttons">
-            <a class="feat-proj__button button" href="https://www.npmjs.com/package/responsive-vid"
+            <a class="feat-proj__button button" href="https://www.npmjs.com/package/responsive-vid" @click="track('NPM Page')"
               >View NPM page</a
             >
-            <a class="feat-proj__button button" href="https://github.com/dankc/responsive-vid"
+            <a class="feat-proj__button button" href="https://github.com/dankc/responsive-vid" @click="track('GitHub Page')"
               >View Code on GitHub</a
             >
           </div>
@@ -40,19 +39,28 @@
 </template>
 
 <script setup lang="ts">
+  import { inject, type Ref, ref } from 'vue';
+  import { storeToRefs } from 'pinia';
+  import { matomoKey } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
-  import { ref } from 'vue';
   import { useClipboard } from '@/composables/useClipboard.ts';
   import Container from '@/components/Container.vue';
   import IntersectionObserver from '@/components/IntersectionObserver.vue';
 
   const { copyToClipboard } = useClipboard();
   const { changeActiveRoute } = useGlobalStore();
+  const { isUserOptedOut } = storeToRefs(useGlobalStore());
+
+  const matomo = inject<Ref>(matomoKey);
   const featProjRef = ref();
 
   function requireImage(url: string): string {
     return `${url}`;
   }
+
+  const track = (description: string) => {
+    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Button', 'Click', `Featured Project - ${description}`);
+  };
 
   const callback: IntersectionObserverCallback = (entries) => {
     entries.forEach((entry) => {

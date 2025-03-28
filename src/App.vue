@@ -1,49 +1,33 @@
 <template>
-  <Nav ref="global-nav" />
-  <main
-    class="main"
+  <Nav ref="global-nav" :class="{ 'modal-open': isModalOpen }" />
+  <router-view
     :class="{ 'modal-open': isModalOpen }"
-    :style="{ '--header-height': `${headerHeight}px` }"
-  >
-    <Hero />
-    <NpmContributions />
-    <Features />
-    <WorksView />
-    <AboutView />
-  </main>
-  <Footer />
+    :style="{ '--header-height': `${headerHeight}px`, '--footer-height': `${footerHeight}px` }"
+  />
+  <Footer ref="global-footer" :class="{ 'modal-open': isModalOpen }" />
 </template>
 
 <script setup lang="ts">
-  import { ref, useTemplateRef, onMounted, type ComponentInstance } from 'vue';
+  import { useTemplateRef, onMounted, type ComponentInstance } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useGlobalStore } from '@/stores/global';
-  import { useHeaderHeight } from '@/composables/useHeaderHeight.ts';
+  import { useElementHeight } from '@/composables/useElementHeight.ts';
   import { useMeta } from '@/composables/useMeta.ts';
-  import Footer from '@/components/Footer.vue';
+  import MetaTags from '@/data/meta-tags.json';
   import Nav from '@/components/Nav.vue';
-  import AboutView from '@/views/About.vue';
-  import NpmContributions from '@/views/FeaturedProject.vue';
-  import Hero from '@/views/Hero.vue';
-  import WorksView from '@/views/Samples.vue';
-  import Features from '@/views/Services.vue';
+  import Footer from '@/components/Footer.vue';
 
-  const { isModalOpen } = storeToRefs(useGlobalStore());
-  const { getHeaderHeight } = useHeaderHeight();
+  const { isModalOpen, headerHeight, footerHeight } = storeToRefs(useGlobalStore());
   const { setMeta } = useMeta();
   setMeta({
-    author: 'Dan Kiser',
-    description: 'Portfolio website of Dan Kiser, Senior Front-End Developer',
-    keywords: 'Senior Front-End Developer, Senior Front-End Engineer, Web Developer',
-    title: 'Dan Kiser | Sr. FE Dev',
-    image: 'static/img/dk-monogram-bg.svg',
+    ...MetaTags,
   });
 
   const globalNav = useTemplateRef('global-nav');
-  const headerHeight = ref<number | undefined>();
+  const globalFooter = useTemplateRef('global-footer');
 
   onMounted(() => {
-    headerHeight.value =
-      getHeaderHeight((globalNav.value as ComponentInstance<HTMLElement>).$el) || 0;
+    headerHeight.value = useElementHeight((globalNav.value as ComponentInstance<HTMLElement>).$el);
+    footerHeight.value = useElementHeight((globalFooter.value as ComponentInstance<HTMLElement>).$el);
   });
 </script>

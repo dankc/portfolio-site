@@ -4,9 +4,14 @@
       <div>&copy; {{ currentYear }} Dan Kiser</div>
       <ul class="footer__icon-container">
         <li class="footer__icon" v-for="(icon, key) in icons" :key>
-          <a :href="icon.url" :title="icon.title">
+          <a :href="icon.url" :title="icon.title" @click="track(icon.trackTag)">
             <component :is="icon.src" />
           </a>
+        </li>
+        <li class="footer__icon">
+          <router-link :to="{ name: 'PrivacyPolicy' }" @click="track('privacy policy')">
+            <IconPrivacyPolicy />
+          </router-link>
         </li>
       </ul>
     </Container>
@@ -14,21 +19,38 @@
 </template>
 
 <script setup lang="ts">
+  import { storeToRefs } from 'pinia';
+  import { inject, type Ref } from 'vue';
+  import { matomoKey } from 'vue3-matomo';
+  import { useGlobalStore } from '@/stores/global.ts';
   import Container from '@/components/Container.vue';
   import GitHub from '@/components/icons/IconGitHub.vue';
   import LinkedIn from '@/components/icons/IconLinkedIn.vue';
   import Email from '@/components/icons/IconEmail.vue';
+  import IconPrivacyPolicy from '@/components/icons/IconPrivacyPolicy.vue';
 
+  const matomo = inject<Ref>(matomoKey);
+  const { isUserOptedOut } = storeToRefs(useGlobalStore());
   const currentYear = new Date().getFullYear();
   const icons = [
-    { src: GitHub, url: 'https://github.com/dankc/', title: 'Visit my Github profile.' },
+    {
+      src: GitHub,
+      url: 'https://github.com/dankc/',
+      title: 'Visit my Github profile.',
+      trackTag: 'GitHub Link',
+    },
     {
       src: LinkedIn,
       url: 'https://www.linkedin.com/in/dankiser1/',
       title: 'Visit my LinkedIn profile.',
+      trackTag: 'LinkedIn Link',
     },
-    { src: Email, url: 'mailto:dankc@pm.me', title: 'Send me an email.' },
+    { src: Email, url: 'mailto:dankc@pm.me', title: 'Send me an email.', trackTag: 'Email Link' },
   ];
+
+  const track = (description: string) => {
+    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Footer', 'Click', description);
+  };
 </script>
 
 <style lang="postcss">

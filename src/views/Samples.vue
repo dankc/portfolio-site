@@ -5,12 +5,7 @@
         <h2 class="samples__heading">Selected Work</h2>
         <div class="samples__inner">
           <ul class="samples__grid">
-            <li
-              v-for="(sample, index) in samples"
-              :key="index"
-              title="Click to preview"
-              @click.stop="openModal(sample)"
-            >
+            <li v-for="(sample, index) in samples" :key="index" title="Click to preview" @click.stop="openModal(sample)">
               <BasePicture
                 v-if="typeof sample.src === 'object'"
                 :sources="sample.src"
@@ -18,13 +13,7 @@
                 width="323"
                 height="200"
               />
-              <img
-                v-else
-                :src="requireImage(sample.src)"
-                alt="Click to preview this work"
-                width="323"
-                height="200"
-              />
+              <img v-else :src="requireImage(sample.src)" alt="Click to preview this work" width="323" height="200" />
             </li>
           </ul>
         </div>
@@ -67,7 +56,9 @@
 
 <script setup lang="ts">
   import type { Ref } from 'vue';
-  import { ref } from 'vue';
+  import { ref, inject } from 'vue';
+  import { storeToRefs } from 'pinia';
+  import { matomoKey } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
   import type { WorkData } from '@/types/work';
   import { samples } from '@/data/work.json';
@@ -78,14 +69,18 @@
 
   const { changeActiveRoute, toggleModal } = useGlobalStore();
 
+  const matomo = inject<Ref>(matomoKey);
+  const { isUserOptedOut } = storeToRefs(useGlobalStore());
   const workRef = ref();
   const selectedWork: Ref<WorkData | undefined> = ref(undefined);
 
   function openModal(data: WorkData): void {
+    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Modal', 'Open', `${data.client}-${data.type}-${data.campaign || ''}`);
     toggleModal();
     selectedWork.value = data;
   }
   function closeModal(): void {
+    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Modal', 'Close');
     toggleModal();
     selectedWork.value = undefined;
   }
@@ -145,6 +140,7 @@
         background-color: var(--off-black);
         max-height: 200px;
         overflow: hidden;
+        cursor: pointer;
       }
 
       img {
