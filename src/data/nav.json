@@ -2,21 +2,25 @@
   "links": [
     {
       "name": "feat-project",
+      "to": "#feat-project",
       "text": "Feat. Project",
       "display": "mobile"
     },
     {
       "name": "services",
+      "to": "#services",
       "text": "Services",
       "display": "mobile"
     },
     {
       "name": "work",
+      "to": "#work",
       "text": "Work",
       "display": "always"
     },
     {
       "name": "about",
+      "to": "#about",
       "text": "About",
       "display": "always"
     }

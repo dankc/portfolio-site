@@ -3,7 +3,7 @@ interface Opts {
   offset?: number;
 }
 
-export const useScrollAnchor = () => {
+export const useScroll = () => {
   const _isReducedMotion: boolean = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const scrollAnchor = (el: HTMLElement | IdString, options: Opts): void => {
@@ -15,7 +15,15 @@ export const useScrollAnchor = () => {
     });
   };
 
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: _isReducedMotion ? 'auto' : 'smooth',
+    });
+  };
+
   return {
     scrollAnchor,
+    scrollTop,
   };
 };

@@ -12,13 +12,16 @@
 
 <script setup lang="ts">
   import { inject, type Ref } from 'vue';
-  import { matomoKey } from 'vue-matomo';
+  import { storeToRefs } from 'pinia';
+  import { matomoKey } from 'vue3-matomo';
+  import { useGlobalStore } from '@/stores/global.ts';
   import { heading, paragraph, cta } from '@/data/hero.json';
   import Container from '@/components/Container.vue';
 
   const matomo = inject<Ref>(matomoKey);
+  const { isUserOptedOut } = storeToRefs(useGlobalStore());
   const track = () => {
-    matomo?.value?.trackEvent('Button', 'Click', cta.text);
+    if (!isUserOptedOut.value) matomo?.value?.trackEvent('Button', 'Click', cta.text);
   };
 </script>
 

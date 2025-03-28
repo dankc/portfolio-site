@@ -4,6 +4,9 @@ import { computed, type ComputedRef, ref, type Ref } from 'vue';
 interface GlobalState {
   isModalOpen: Ref<boolean>;
   activeRoute: Ref<string>;
+  footerHeight: Ref<number>;
+  headerHeight: Ref<number>;
+  isUserOptedOut: Ref<boolean>;
   isTallEnoughForIO: ComputedRef<boolean>;
   toggleModal: () => void;
   changeActiveRoute: (route: string) => void;
@@ -12,6 +15,9 @@ interface GlobalState {
 export const useGlobalStore = defineStore('global', (): GlobalState => {
   const isModalOpen = ref(false);
   const activeRoute = ref('home');
+  const footerHeight = ref(80);
+  const headerHeight = ref(80);
+  const isUserOptedOut = ref(false);
 
   const isTallEnoughForIO = computed({
     get: () => {
@@ -27,5 +33,14 @@ export const useGlobalStore = defineStore('global', (): GlobalState => {
   function changeActiveRoute(route: string) {
     activeRoute.value = route;
   }
-  return { activeRoute, changeActiveRoute, isTallEnoughForIO, isModalOpen, toggleModal };
+  return {
+    activeRoute,
+    changeActiveRoute,
+    footerHeight,
+    headerHeight,
+    isTallEnoughForIO,
+    isModalOpen,
+    isUserOptedOut,
+    toggleModal,
+  };
 });

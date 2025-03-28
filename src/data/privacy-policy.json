@@ -1,0 +1,10 @@
+{
+  "heading": "Privacy Policy",
+  "paragraph": "I use {{${matomoHome}Matomo Analytics}} to understand how visitors interact with my portfolio site. Matomo is configured to protect your privacy:",
+  "list": [
+    "No cookies are used to track your activity.",
+    "Your IP address is anonymized before being stored.",
+    "The data collected is used solely for analytics purposes and is not shared with third parties. You can opt out below:"
+  ],
+  "optOutButton": "Opt out of Anonymized Analytics"
+}
