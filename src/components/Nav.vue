@@ -21,7 +21,7 @@
             :key="name"
             class="nav__item"
             :class="{
-              active: name === activeRoute,
+              active: name === activeRoute && isTallEnoughForIO,
               'dt-hidden': display === 'mobile',
             }"
             :to="{
@@ -51,7 +51,7 @@
 
   const matomo = useMatomo();
   const { scrollTop } = useScroll();
-  const { activeRoute, isUserOptedOut } = storeToRefs(useGlobalStore());
+  const { activeRoute, isUserOptedOut, isTallEnoughForIO } = storeToRefs(useGlobalStore());
   const { currentRoute, push } = useRouter();
   const isMenuOpen = ref(false);
   const mediaQuery = window.matchMedia('(min-width: 600px)');

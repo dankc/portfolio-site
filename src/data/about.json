@@ -27,6 +27,10 @@
     "CSS3": {
       "bgColor": "#254DE4"
     },
+    "UnoCSS": {
+      "bgColor": "#dfdfdf",
+      "color": "#000000"
+    },
     "Git": {
       "bgColor": "#EF3C2D",
       "color": "#2F2607"
