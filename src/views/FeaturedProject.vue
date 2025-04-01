@@ -45,7 +45,7 @@
 <script setup lang="ts">
   import { computed, ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useMatomo } from 'vue3-matomo';
+  import { useMatomo, type MatomoInstance } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
   // import { useClipboard } from '@/composables/useClipboard.ts';
   import { heading, projects } from '@/data/featured-projects.json';
@@ -72,7 +72,7 @@
     track(['Tab', 'Click', tabs[tab]]);
   };
 
-  const track = (values: string[]) => {
+  const track = (values: Parameters<MatomoInstance['trackEvent']>) => {
     if (!isUserOptedOut.value) matomo.value?.trackEvent(...values);
   };
 
