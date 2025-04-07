@@ -102,7 +102,7 @@
     &__skills-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.625rem;
+      gap: 1.25rem 0.625rem;
       margin-top: 1.25rem;
       padding-left: 0;
       list-style-type: none;

@@ -20,7 +20,7 @@
     },
     {
       "name": "Responsive-Vid",
-      "description": "A TypeScript-supported library for Vue 3, JavaScript modules, and browser scripts to dynamically swap video sources and posters based on media queries. Perfect for autoplaying background videos with varying file sizes or aspect ratios across viewport widths—or any media query condition like resolution or orientation.",
+      "description": "A TypeScript-supported library for Vue 3, React, JavaScript modules, and browser scripts to dynamically swap video sources and posters based on media queries. Perfect for autoplaying background videos with varying file sizes or aspect ratios across viewport widths—or any media query condition like resolution or orientation.",
       "image": "static/img/responsive-vid-logo.svg",
       "buttons": [
         {

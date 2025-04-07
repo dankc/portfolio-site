@@ -1,10 +1,19 @@
 {
-  "heading": "Privacy Policy",
-  "paragraph": "I use {{${matomoHome}Matomo Analytics}} to understand how visitors interact with my portfolio site. Matomo is configured to protect your privacy:",
-  "list": [
-    "No cookies are used to track your activity.",
-    "Your IP address is anonymized before being stored.",
-    "The data collected is used solely for analytics purposes and is not shared with third parties. You can opt out below:"
-  ],
-  "optOutButton": "Opt out of Anonymized Analytics"
+  "heading": "Privacy Policy and Disclaimers",
+  "sections": [
+    {
+      "heading": "Privacy Policy",
+      "paragraph": "I use {{${matomoHome}Matomo Analytics}} to understand how visitors interact with my portfolio site. Matomo is configured to protect your privacy:",
+      "list": [
+        "No cookies are used to track your activity.",
+        "Your IP address is anonymized before being stored.",
+        "The data collected is used solely for analytics purposes and is not shared with third parties. You can opt out below:"
+      ],
+      "optOutButton": "Opt out of Anonymized Analytics"
+    },
+    {
+      "heading": "Disclaimers",
+      "paragraph": "<strong>Copyright & Trademarks</strong>: This website and the DK logo are © 2025 Dan Kiser. Vue and Matomo logos are trademarks of their respective owners, used here to indicate compatibility in Vue3-Matomo. Screenshots showcase my development work with the respective brand."
+    }
+  ]
 }

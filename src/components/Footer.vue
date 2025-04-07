@@ -1,17 +1,15 @@
 <template>
   <footer class="footer">
     <Container class="footer__inner">
-      <div>&copy; {{ currentYear }} Dan Kiser</div>
+      <p class="footer__copyrights">
+        &copy; {{ currentYear }} Dan Kiser –
+        <router-link :to="{ name: 'PrivacyPolicy' }" @click="track('privacy policy')">Privacy & Disclaimers</router-link>
+      </p>
       <ul class="footer__icon-container">
         <li class="footer__icon" v-for="(icon, key) in icons" :key>
           <a :href="icon.url" :title="icon.title" @click="track(icon.trackTag)">
             <component :is="icon.src" />
           </a>
-        </li>
-        <li class="footer__icon">
-          <router-link :to="{ name: 'PrivacyPolicy' }" @click="track('privacy policy')">
-            <IconPrivacyPolicy />
-          </router-link>
         </li>
       </ul>
     </Container>
@@ -26,7 +24,6 @@
   import GitHub from '@/components/icons/IconGitHub.vue';
   import LinkedIn from '@/components/icons/IconLinkedIn.vue';
   import Email from '@/components/icons/IconEmail.vue';
-  import IconPrivacyPolicy from '@/components/icons/IconPrivacyPolicy.vue';
 
   const matomo = useMatomo();
   const { isUserOptedOut } = storeToRefs(useGlobalStore());
@@ -65,6 +62,16 @@
 
       @media (min-width: 485px) {
         flex-direction: row;
+      }
+    }
+
+    &__copyrights {
+      a {
+        white-space: nowrap;
+
+        @media (max-width: 664px) {
+          display: block;
+        }
       }
     }
 
