@@ -93,12 +93,16 @@
 <style lang="postcss">
   .feat-proj {
     margin-top: var(--section-gap);
-    padding: 1.25rem 0 1.75rem;
+    padding: 3rem 0;
     background-color: var(--green-bold);
     color: var(--black);
 
     @media (min-width: 600px) {
       clip-path: var(--angle-shape);
+    }
+
+    @media (min-width: 1024px) {
+      padding: 1.25rem 0 1.75rem 0;
     }
 
     &__heading {
@@ -118,7 +122,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin: 1.5rem 0;
+      margin: 1.5rem 0 0;
       text-align: center;
 
       @media (min-width: 620px) {
@@ -205,6 +209,10 @@
         border-top-right-radius: 8px;
         border-bottom: 3px solid transparent;
         transition: all 0.2s ease-in-out;
+
+        &:hover {
+          background-color: rgb(from var(--black) r g b / 20%);
+        }
       }
 
       &__pane {

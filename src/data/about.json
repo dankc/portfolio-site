@@ -21,11 +21,18 @@
       "bgColor": "#41B782",
       "color": "#33495D"
     },
+    "Vite": {
+      "bgColor": "#986DFE"
+    },
     "HTML5": {
       "bgColor": "#E44D25"
     },
     "CSS3": {
       "bgColor": "#254DE4"
+    },
+    "SCSS": {
+      "bgColor": "#BF4080",
+      "color": "#ffffff"
     },
     "UnoCSS": {
       "bgColor": "#dfdfdf",
@@ -39,9 +46,17 @@
       "bgColor": "#8AC740",
       "color": "#ffffff"
     },
-    "REST": {
+    "REST API": {
       "bgColor": "#8103D3",
       "color": "#81FF00"
+    },
+    "Figma": {
+      "bgColor": "#18BCFE",
+      "color": "#000000"
+    },
+    "Storybook": {
+      "bgColor": "#FF4785",
+      "color": "#ffffff"
     }
   }
 }
