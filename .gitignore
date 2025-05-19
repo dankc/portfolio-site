@@ -30,3 +30,5 @@ working-files
 
 *.tsbuildinfo
 
+# Doing more with Apache, time to omit it
+.htaccess
