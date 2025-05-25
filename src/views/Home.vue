@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
+  import { computed } from 'vue';
   import { useRoute } from 'vue-router';
   import { useMeta } from '@/composables/useMeta.ts';
   import { useContentStore } from '@/stores/content.ts';
@@ -25,10 +25,7 @@
   setMeta({
     title: 'Dan Kiser | Sr. FE Dev',
   });
-  const delay = async (ms: number) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
-  await delay(10000);
+
   const { data, error } = await getContentfulPage(path);
   const sectionData = computed(() => {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <section class="privacy-policy">
+  <main class="privacy-policy">
     <h2 class="privacy-policy__h2">{{ data?.title }}</h2>
     <template v-for="({ heading, paragraphs, list }, index) in data?.body" :key="index">
       <h3 class="privacy-policy__h3">{{ heading }}</h3>
@@ -18,7 +18,7 @@
         Opt out of Anonymized Analytics
       </button>
     </template>
-  </section>
+  </main>
 </template>
 
 <script setup lang="ts">

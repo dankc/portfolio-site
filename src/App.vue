@@ -1,18 +1,30 @@
 <template>
   <Nav ref="global-nav" :class="{ 'modal-open': isModalOpen }" />
-  <Suspense>
-    <router-view
-      :class="{ 'modal-open': isModalOpen }"
-      :style="{ '--header-height': `${headerHeight}px`, '--footer-height': `${footerHeight}px` }"
-    />
-    <template #fallback>
-      <div class="loading" style="min-height: 90vh; font-size: 48px; color: chartreuse">Loading...</div>
-    </template>
-  </Suspense>
-  <div v-if="fetchError" class="error">
-    {{ fetchError }}
-    <button @click="retryFetch">Retry</button>
+
+  <div class="page-body">
+    <router-view v-slot="{ Component, route }">
+      <template v-if="Component">
+        <transition name="blur">
+          <Suspense timeout="0">
+            <template #default>
+              <component
+                :is="Component"
+                :key="route.path"
+                :class="{ 'modal-open': isModalOpen }"
+                :style="{ '--header-height': `${headerHeight}px`, '--footer-height': `${footerHeight}px` }"
+              />
+            </template>
+            <template #fallback> <Loading /> </template>
+          </Suspense>
+        </transition>
+      </template>
+    </router-view>
+    <div v-if="fetchError" class="error">
+      {{ fetchError }}
+      <button class="button" @click.prevent="retryFetch">Reload page</button>
+    </div>
   </div>
+
   <Footer ref="global-footer" :class="{ 'modal-open': isModalOpen }" />
 </template>
 
@@ -26,8 +38,9 @@
   import MetaTags from '@/data/meta-tags.json';
   import Nav from '@/components/Nav.vue';
   import Footer from '@/components/Footer.vue';
+  import Loading from '@/views/Loading.vue';
 
-  const { push, currentRoute } = useRouter();
+  const { go } = useRouter();
   const { isModalOpen, headerHeight, footerHeight } = storeToRefs(useGlobalStore());
   const { setMeta } = useMeta();
   setMeta({
@@ -37,7 +50,7 @@
   const fetchError = ref<string | null>(null);
   const retryFetch = () => {
     fetchError.value = null;
-    push(currentRoute.value.path);
+    go(0);
   };
 
   const globalNav = useTemplateRef('global-nav');
@@ -62,5 +75,10 @@
     color: red;
     padding: 1rem;
     text-align: center;
+
+    .button {
+      margin-left: 1rem;
+      background-color: var(--green-bold);
+    }
   }
 </style>
