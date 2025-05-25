@@ -2,8 +2,8 @@
   <footer class="footer">
     <Container class="footer__inner">
       <p class="footer__copyrights">
-        &copy; {{ currentYear }} Dan Kiser –
-        <router-link :to="{ name: 'PrivacyPolicy' }" @click="track('privacy policy')">Privacy & Disclaimers</router-link>
+        &copy; {{ currentYear }} Dan Kiser &ndash;
+        <router-link :to="{ name: 'PrivacyPolicy' }" @click="track('privacy policy')">Privacy &amp; Disclaimers</router-link>
       </p>
       <ul class="footer__icon-container">
         <li class="footer__icon" v-for="(icon, key) in icons" :key>

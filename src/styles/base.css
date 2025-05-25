@@ -41,6 +41,11 @@ body {
   }
 }
 
+.page-body {
+  position: relative;
+  min-height: 100vh;
+}
+
 .button {
   display: inline-block;
   padding: 0.6rem 1.875rem;

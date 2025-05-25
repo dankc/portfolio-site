@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
   const { bgColor, color = '#ffffff' } = defineProps<{
-    bgColor: string;
+    bgColor?: string;
     color?: string;
   }>();
 </script>
