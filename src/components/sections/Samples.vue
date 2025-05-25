@@ -11,14 +11,7 @@
               title="Click to preview"
               @click.stop="openModal(sample)"
             >
-              <BasePicture
-                v-if="sample.srcLg && sample.srcSm"
-                :sources="{ lg: sample.srcLg, sm: sample.srcSm }"
-                alt="Click to preview this work"
-                width="323"
-                height="200"
-              />
-              <img v-else :src="sample.srcLg" alt="Click to preview this work" width="323" height="200" />
+              <img :src="sample.thumbnail" alt="Click to preview this work" width="323" height="200" />
             </li>
           </ul>
         </div>

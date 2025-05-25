@@ -195,6 +195,8 @@ export interface ISampleFields {
   /** Origin */
   origin?: string | undefined;
 
+  thumbnail: string;
+
   /** Src Sm */
   srcSm?: string | undefined;
 
