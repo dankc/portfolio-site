@@ -1,27 +1,37 @@
 <template>
   <section class="privacy-policy">
-    <h2 class="privacy-policy__h2">{{ heading }}</h2>
-    <template v-for="({ heading, paragraph, list, optOutButton }, index) in sections" :key="index">
+    <h2 class="privacy-policy__h2">{{ data?.title }}</h2>
+    <template v-for="({ heading, paragraphs, list }, index) in data?.body" :key="index">
       <h3 class="privacy-policy__h3">{{ heading }}</h3>
-      <p class="privacy-policy__paragraph" v-html="parseLinks(paragraph)"></p>
+      <p
+        class="privacy-policy__paragraph"
+        v-for="(paragraph, index) in paragraphs"
+        :key="index"
+        v-html="parseLinks(paragraph)"
+      ></p>
       <ul v-if="list" class="privacy-policy__list">
         <li v-for="(item, key) in list" :key>
           {{ item }}
         </li>
       </ul>
-      <button v-if="optOutButton" class="privacy-policy__opt-out button" @click.prevent="optOut">{{ optOutButton }}</button>
+      <button v-if="heading.toLowerCase().includes('privacy')" class="privacy-policy__opt-out button" @click.prevent="optOut">
+        Opt out of Anonymized Analytics
+      </button>
     </template>
   </section>
 </template>
 
 <script setup lang="ts">
+  import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useMatomo } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
   import { useMeta } from '@/composables/useMeta.ts';
   import { useParsePlaceholders } from '@/composables/useParsePlaceholders.ts';
-  import { heading, sections } from '@/data/privacy-policy.json';
+  import { useContentStore } from '@/stores/content.ts';
 
+  const { path } = useRoute();
+  const { getContentfulPage } = useContentStore();
   const matomo = useMatomo();
   const { setMeta } = useMeta();
   const { isUserOptedOut } = storeToRefs(useGlobalStore());
@@ -34,6 +44,12 @@
   setMeta({
     title: 'Privacy Policy | kiser.codes',
   });
+
+  const { data, error } = await getContentfulPage(path);
+
+  if (error.value) {
+    throw Error(error.value);
+  }
 </script>
 
 <style lang="postcss">

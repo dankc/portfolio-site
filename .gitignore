@@ -32,3 +32,7 @@ working-files
 
 # Doing more with Apache, time to omit it
 .htaccess
+
+# Secrets
+graphql.config.yml
+.env
