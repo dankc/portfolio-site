@@ -10,7 +10,7 @@
 
 <style lang="postcss">
   .error-page {
-    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+    min-height: calc(100dvh - var(--header-height) - var(--footer-height));
     padding: var(--section-gap) var(--gutter) 0;
     text-align: center;
 

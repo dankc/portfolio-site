@@ -1,7 +1,7 @@
 <template>
   <main class="privacy-policy">
     <h2 class="privacy-policy__h2">{{ data?.title }}</h2>
-    <template v-for="({ heading, paragraphs, list }, index) in data?.body" :key="index">
+    <template v-for="({ heading, paragraphs, list, sectionId }, index) in data?.body" :key="index">
       <h3 class="privacy-policy__h3">{{ heading }}</h3>
       <p
         class="privacy-policy__paragraph"
@@ -14,7 +14,7 @@
           {{ item }}
         </li>
       </ul>
-      <button v-if="heading.toLowerCase().includes('privacy')" class="privacy-policy__opt-out button" @click.prevent="optOut">
+      <button v-if="sectionId == 'privacyPolicy'" class="privacy-policy__opt-out button" @click.prevent="optOut">
         Opt out of Anonymized Analytics
       </button>
     </template>
@@ -22,6 +22,7 @@
 </template>
 
 <script setup lang="ts">
+  import type { IDetailsFields, IPageFields } from '@/types/contentful-generated-types';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useMatomo } from 'vue3-matomo';
@@ -45,7 +46,11 @@
     title: 'Privacy Policy | kiser.codes',
   });
 
-  const { data, error } = await getContentfulPage(path);
+  interface PrivacyPage extends Omit<IPageFields, 'body'> {
+    body: Array<IDetailsFields>;
+  }
+
+  const { data, error } = await getContentfulPage<PrivacyPage>(path);
 
   if (error.value) {
     throw Error(error.value);
@@ -55,7 +60,7 @@
 <style lang="postcss">
   .privacy-policy {
     max-width: calc(820px + var(--gutter));
-    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+    min-height: calc(100dvh - var(--header-height) - var(--footer-height));
     margin: 0 auto;
     padding: 4rem var(--gutter) 0;
 

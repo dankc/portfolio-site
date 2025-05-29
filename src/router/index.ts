@@ -9,7 +9,7 @@ export default createRouter({
     {
       path: '/',
       name: 'Home',
-      component: () => import('../views/Home.vue'),
+      component: Home,
     },
     {
       path: '/privacy-policy',

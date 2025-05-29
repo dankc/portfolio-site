@@ -37,7 +37,25 @@ export default defineConfig({
       lintOnStart: true,
       emitError: true, // Treat warnings as errors in terminal
     }),
-    ViteImageOptimizer(),
+    ViteImageOptimizer({
+      svg: {
+        plugins: [
+          {
+            name: 'preset-default',
+            params: {
+              overrides: {
+                cleanupNumericValues: false,
+                cleanupIds: false,
+                convertColors: false,
+                convertPathData: false,
+                inlineStyles: false,
+                removeViewBox: false, // https://github.com/svg/svgo/issues/1128
+              },
+            },
+          },
+        ],
+      },
+    }),
     banner(`/*** Built on ${buildDateTime} ***/`),
   ],
   resolve: {
@@ -56,5 +74,13 @@ export default defineConfig({
   },
   esbuild: {
     drop: isDev ? [] : ['console', 'debugger'],
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+    },
   },
 });

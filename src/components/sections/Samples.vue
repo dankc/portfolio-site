@@ -19,21 +19,21 @@
     </section>
   </IntersectionObserver>
 
-  <teleport to="body">
-    <modal v-if="selectedWork" @close-modal="closeModal">
-      <section class="work-modal">
+  <Teleport to="body">
+    <Modal :toggle-on="selectedWork !== undefined" :transition="{ name: 'scale', appear: true }" @on-close="closeModal">
+      <div class="work-modal">
         <header class="work-modal__header">
           <div>
             <h2 class="work-modal__heading">
-              {{ selectedWork.client }}
+              {{ selectedWork?.client }}
             </h2>
             <h3 class="work-modal__subheading">
-              {{ selectedWork.campaign || selectedWork.type }}
+              {{ selectedWork?.campaign || selectedWork?.type }}
             </h3>
           </div>
 
           <a
-            v-if="selectedWork.type === 'site'"
+            v-if="selectedWork?.type === 'site'"
             :href="selectedWork.origin"
             class="button"
             referrerpolicy="no-referrer"
@@ -45,14 +45,14 @@
 
         <div class="work-modal__image-container">
           <BasePicture
-            v-if="selectedWork.srcLg && selectedWork.srcSm"
+            v-if="selectedWork?.srcLg && selectedWork?.srcSm"
             :sources="{ lg: selectedWork.srcLg, sm: selectedWork.srcSm }"
           />
-          <img v-else :src="selectedWork.srcLg" alt="" />
+          <img v-else :src="selectedWork?.srcLg" alt="" />
         </div>
-      </section>
-    </modal>
-  </teleport>
+      </div>
+    </Modal>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -71,9 +71,8 @@
     data: ISectionFields & { sectionContentList: ISampleFields[] };
   }>();
 
-  const { changeActiveRoute, toggleModal } = useGlobalStore();
-
   const matomo = useMatomo();
+  const { changeActiveSection } = useGlobalStore();
   const { isUserOptedOut } = storeToRefs(useGlobalStore());
   const workRef = ref();
   const selectedWork: Ref<ISampleFields | undefined> = ref(undefined);
@@ -82,21 +81,18 @@
     if (!isUserOptedOut.value) {
       matomo.value?.trackEvent('Modal', 'Open', `${data.client}-${data.type}-${data.campaign || ''}`);
     }
-    toggleModal();
     selectedWork.value = data;
   }
   function closeModal(): void {
     if (!isUserOptedOut.value) matomo.value?.trackEvent('Modal', 'Close');
-    toggleModal();
     selectedWork.value = undefined;
   }
   const callback: IntersectionObserverCallback = (entries) => {
     entries.forEach((entry) => {
       const { isIntersecting } = entry;
-      const isTallEnoughForIO = window.matchMedia('(max-width: 1023px)').matches;
 
-      if (isIntersecting && isTallEnoughForIO) {
-        changeActiveRoute('work');
+      if (isIntersecting) {
+        changeActiveSection('work');
       }
     });
   };
@@ -163,7 +159,7 @@
     width: 95%;
     max-width: var(--max-content-width);
     margin: 0 auto;
-    padding: 20px;
+    padding: 60px 20px 0;
     color: var(--white);
 
     &__header {
@@ -172,11 +168,13 @@
       align-items: center;
       flex-direction: column;
       gap: 1.5rem;
+      text-align: center;
 
       @media (min-width: 1024px) {
         align-items: flex-end;
         flex-direction: row;
         gap: 0;
+        text-align: left;
       }
     }
 

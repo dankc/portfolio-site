@@ -1,7 +1,7 @@
 <template>
   <main class="main">
     <Hero :data="sectionData.heroData" />
-    <NpmContributions :data="sectionData.packagesData" />
+    <FeaturedPackages :data="sectionData.packagesData" />
     <Features :data="sectionData.servicesData" />
     <WorksView :data="sectionData.workData" />
     <AboutView :data="sectionData.aboutData" />
@@ -9,12 +9,21 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import type { HomePage, HomePageData } from '@/types/home-content';
   import { useRoute } from 'vue-router';
   import { useMeta } from '@/composables/useMeta.ts';
   import { useContentStore } from '@/stores/content.ts';
+  import {
+    transformPageData,
+    isHeroFields,
+    isFeaturedPackages,
+    isSampleSection,
+    isServicesSection,
+    isAboutSection,
+    type SectionMapping,
+  } from '@/utils/verify-page-data.ts';
   import AboutView from '@/components/sections/About.vue';
-  import NpmContributions from '@/components/sections/FeaturedProject.vue';
+  import FeaturedPackages from '@/components/sections/FeaturedPackages.vue';
   import Hero from '@/components/sections/Hero.vue';
   import WorksView from '@/components/sections/Samples.vue';
   import Features from '@/components/sections/Services.vue';
@@ -26,16 +35,16 @@
     title: 'Dan Kiser | Sr. FE Dev',
   });
 
-  const { data, error } = await getContentfulPage(path);
-  const sectionData = computed(() => {
-    return {
-      heroData: data.value?.body.find((entry) => entry.sectionId === 'homeHero'),
-      packagesData: data.value?.body.find((entry) => entry.sectionId === 'featuredPackages'),
-      servicesData: data.value?.body.find((entry) => entry.sectionId === 'services'),
-      workData: data.value?.body.find((entry) => entry.sectionId === 'workSamples'),
-      aboutData: data.value?.body.find((entry) => entry.sectionId === 'about'),
-    };
-  });
+  const { data, error } = await getContentfulPage<HomePage>(path);
+  const sectionMapping: SectionMapping<HomePageData> = {
+    heroData: { sectionId: 'homeHero', typeGuard: isHeroFields },
+    packagesData: { sectionId: 'featuredPackages', typeGuard: isFeaturedPackages },
+    servicesData: { sectionId: 'services', typeGuard: isServicesSection },
+    workData: { sectionId: 'workSamples', typeGuard: isSampleSection },
+    aboutData: { sectionId: 'about', typeGuard: isAboutSection },
+  };
+
+  const sectionData = transformPageData<HomePage, HomePageData>(data, sectionMapping);
 
   if (error.value) {
     throw Error(error.value);

@@ -1,53 +1,87 @@
-import { ref, toRaw } from 'vue';
+import { ref, toRaw, type Ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useRest, type FetchResponse } from '@/composables/useRest.ts';
-import type { ExtendedPageFields } from '@/types/contentful';
+import type { IPageFields, ContentfulEntryFields } from '@/types/contentful';
 
-type PageStore = Record<string, ExtendedPageFields>;
+type ContentStore = Record<string, IPageFields | ContentfulEntryFields>;
 
 export const useContentStore = defineStore('content', () => {
-  const pageStore = ref<PageStore>({});
+  const contentStore = ref<ContentStore>({});
 
-  // Get all data for a page, cache it, and serve the cache if it's there
-  const getContentfulPage = async (slug: string): Promise<FetchResponse<ExtendedPageFields>> => {
-    const { getContent } = useRest();
+  const getCache = (key: string): unknown => {
     const ttl = 24 * 60 * 60 * 1000; // 24h
-    const cache = pageStore.value.hasOwnProperty(slug) ? pageStore.value[slug] : sessionStorage.getItem(`page-${slug}`);
+    const cache = key in contentStore.value ? contentStore.value[key] : sessionStorage.getItem(key);
     if (cache) {
       let _data;
       if (typeof cache === 'string') {
         const _timestamp = JSON.parse(cache).timestamp;
         _data = JSON.parse(cache).data;
         if (Date.now() - _timestamp > ttl) {
-          sessionStorage.removeItem(`page-${slug}`);
-          delete pageStore.value[slug];
-          return getContentfulPage(slug);
+          sessionStorage.removeItem(key);
+          delete contentStore.value[key];
+          return null;
         }
-        pageStore.value[slug] = _data;
+        contentStore.value[key] = _data;
       } else {
         _data = toRaw(cache);
       }
+      return _data;
+    }
+    return null;
+  };
+  const setCache = (key: string, data: any): void => {
+    contentStore.value[key] = data;
+    sessionStorage.setItem(key, JSON.stringify({ timestamp: Date.now(), data }));
+  };
+
+  // Get all data for a page, cache it, and serve the cache if it's there
+  const getContentfulPage = async <T>(slug: string): Promise<FetchResponse<T>> => {
+    const { getContent } = useRest();
+    const cacheKey = `page-${slug}`;
+    const cachedContent = getCache(cacheKey);
+    if (cachedContent) {
       return {
-        data: ref(_data),
+        data: ref(cachedContent) as Ref<T | null>,
         pending: ref(false),
         success: ref(true),
         error: ref(''),
       };
     }
 
-    const { data, pending, success, error } = await getContent<ExtendedPageFields>(
-      `?content_type=page&fields.slug=${slug}&include=3`
-    );
+    const { data, pending, success, error } = await getContent<T>(`?content_type=page&fields.slug=${slug}&include=3`);
 
-    if (success.value) {
-      pageStore.value[slug] = data.value as ExtendedPageFields;
-      sessionStorage.setItem(`page-${slug}`, JSON.stringify({ timestamp: Date.now(), data: data.value }));
+    if (success.value && data.value) {
+      setCache(cacheKey, data.value);
+    }
+    return { data, pending, success, error };
+  };
+
+  // Get all data for a single entry, cache it, and serve the cache if it's there
+  const getContentfulEntry = async <T>(entry: string): Promise<FetchResponse<T>> => {
+    console.log('hello?');
+    const { getContent } = useRest();
+    const cacheKey = `entry-${entry}`;
+    const cachedContent = getCache(cacheKey);
+    if (cachedContent) {
+      return {
+        data: ref(cachedContent) as Ref<T | null>,
+        pending: ref(false),
+        success: ref(true),
+        error: ref(''),
+      };
+    }
+
+    const { data, pending, success, error } = await getContent<T>(`${entry}`);
+    console.log('fetch successful?', data.value, success.value);
+    if (success.value && data.value) {
+      setCache(cacheKey, data.value);
     }
     return { data, pending, success, error };
   };
 
   return {
-    pageStore,
+    contentStore,
+    getContentfulEntry,
     getContentfulPage,
   };
 });

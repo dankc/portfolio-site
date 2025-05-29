@@ -1,4 +1,4 @@
-import Links from '@/data/links.json';
+import Links from '@/data/parsing-links.json';
 
 type LinkShape = { [K: string]: string };
 export type PlaceHolderValues = { [K: string]: any };

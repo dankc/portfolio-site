@@ -1,0 +1,4 @@
+:root {
+  --blur-amount: 5px;
+  --shadow-inset: inset 0 0 10px #0e0e0e;
+}

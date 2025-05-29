@@ -1,7 +1,8 @@
 {
   "author": "Dan Kiser",
   "description": "Portfolio website of Dan Kiser, Senior Front-End Developer",
-  "keywords": "Senior Front-End Developer, Senior Front-End Engineer, Web Developer",
+  "keywords": "Senior Front-End Developer, Senior Front-End Engineer, Web Developer, Front-End Developer",
+  "color-scheme": "dark",
   "title": "Dan Kiser | Sr. FE Dev",
 
   "og:locale": "en-us",
@@ -9,10 +10,14 @@
   "og:title": "Dan Kiser | Sr. FE Dev",
   "og:url": "https://kiser.codes",
   "og:image": "/static/img/rotated-dk-monogram-og-img.png",
+  "og:image:alt": "DK logo",
   "og:type": "website",
+
+  "twitter:card": "summary",
   "twitter:domain": "kiser.codes",
   "twitter:url": "https://kiser.codes",
   "twitter:title": "Dan Kiser | Sr. FE Dev",
   "twitter:description": "Portfolio website of Dan Kiser, Senior Front-End Developer",
-  "twitter:image": "/static/img/rotated-dk-monogram-og-img.png"
+  "twitter:image": "/static/img/rotated-dk-monogram-og-img.png",
+  "twitter:image:alt": "DK logo"
 }
