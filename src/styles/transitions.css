@@ -8,16 +8,53 @@
     opacity: 0;
 }
 
+.scale-enter-active,
+.scale-leave-active {
+    transform: scale(1);
+    /*This needs custom easing to look right*/
+    transition: transform 0.5s ease-in-out;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+     transform: scale(0);
+}
+
 .blur-enter-active,
 .blur-leave-active {
+    transform: scale(1);
     backdrop-filter: blur(0px);
     filter: blur(0px);
-    transition: all 0.5s ease-in;
+    transition: all 0.2s ease-in;
 }
 
 .blur-enter-from,
 .blur-leave-to {
+    /* transform to prevent visual separation of elements while blurred */
+    transform: scale(1.014);
     backdrop-filter: blur(10px);
     filter: blur(10px);
     opacity: 0;
+}
+
+.toast-enter-active,
+.toast-leave-active {
+    transform: translateY(0);
+    transition: transform 0.5s ease-in-out;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+    transform: translateY(-100%);
+}
+
+.slideout-enter-active,
+.slideout-leave-active {
+    transform: translateX(0);
+    transition: transform 0.5s ease-in-out;
+}
+
+.slideout-enter-from,
+.slideout-leave-to {
+    transform: translateX(-100%);
 }

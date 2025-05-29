@@ -1,13 +1,19 @@
 declare let document: Document;
-type MetaObject = { [key: string]: string };
+type MetaObject = Record<string, string>;
 
-const xProperties = ['twitter:domain', 'twitter:url'];
-const xNames = ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:image'];
 const head = document.head;
 
-const isOg = (key: string) => key.startsWith('og:');
-const isNotSocial = (key: string) =>
-  key !== 'title' && !isOg(key) && !xNames.includes(`twitter:${key}`) && !xProperties.includes(`twitter:${key}`);
+const standardTags = ['author', 'description', 'keywords', 'referrer', 'theme-color', 'color-scheme', 'viewport'];
+const twitterTags = [
+  'twitter:card',
+  'twitter:domain',
+  'twitter:url',
+  'twitter:title',
+  'twitter:description',
+  'twitter:image',
+  'twitter:image:alt',
+];
+const isName = (key: string) => [...standardTags, ...twitterTags].includes(key);
 
 function setMetaProperty(key: string, value: string) {
   const meta = document.createElement('meta');
@@ -26,10 +32,9 @@ export const useMeta = () => {
   const setMeta = (metaObject: MetaObject): void => {
     Object.entries(metaObject).forEach(([key, value]) => {
       if (key === 'title') document[key] = value;
-      if (isNotSocial(key) || (xNames.includes(key) && !xProperties.includes(key))) {
+      if (isName(key)) {
         setMetaName(key, value);
-      }
-      if (isOg(key) || (xProperties.includes(key) && !xNames.includes(key))) {
+      } else {
         setMetaProperty(key, value);
       }
     });

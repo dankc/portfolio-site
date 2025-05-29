@@ -4,10 +4,10 @@
       <slot name="nav" />
       <nav class="tab-view__nav">
         <div
-          class="tab-view__nav-item"
-          :class="{ active: currentTab === index }"
           v-for="(tab, index) of tabs"
           :key="index"
+          class="tab-view__nav-item"
+          :class="{ active: currentTab === index }"
           @click="changeTab(index)"
         >
           {{ tab }}

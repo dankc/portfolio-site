@@ -33,7 +33,7 @@
     data: ISectionFields;
   }>();
 
-  const { changeActiveRoute } = useGlobalStore();
+  const { changeActiveSection } = useGlobalStore();
   const { parseCopy } = useParsePlaceholders();
   const aboutRef = ref();
 
@@ -51,10 +51,9 @@
   const callback: IntersectionObserverCallback = (entries) => {
     entries.forEach((entry) => {
       const { isIntersecting } = entry;
-      const isTallEnoughForIO = window.matchMedia('(max-width: 1023px)').matches;
 
-      if (isIntersecting && isTallEnoughForIO) {
-        changeActiveRoute('about');
+      if (isIntersecting) {
+        changeActiveSection('about');
       }
     });
   };

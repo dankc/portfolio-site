@@ -7,16 +7,30 @@
       </p>
       <ul class="footer__icon-container">
         <li class="footer__icon" v-for="(icon, key) in icons" :key>
-          <a :href="icon.url" :title="icon.title" @click="track(icon.trackTag)">
+          <a v-if="typeof Email" :href="icon.url" :title="icon.title" @click="toggleForm">
+            <component :is="icon.src" />
+          </a>
+          <a v-else :href="icon.url" :title="icon.title" @click="track(icon.trackTag)">
             <component :is="icon.src" />
           </a>
         </li>
       </ul>
     </Container>
+    <teleport to="body">
+      <Modal
+        :toggle-on="isFormOpen"
+        :transition="{ name: 'scale', appear: true }"
+        :close-button-inside="true"
+        @on-close="toggleForm"
+      >
+        <EmailForm :close-cb="toggleForm" />
+      </Modal>
+    </teleport>
   </footer>
 </template>
 
 <script setup lang="ts">
+  import { ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useMatomo } from 'vue3-matomo';
   import { useGlobalStore } from '@/stores/global.ts';
@@ -24,7 +38,10 @@
   import GitHub from '@/components/icons/IconGitHub.vue';
   import LinkedIn from '@/components/icons/IconLinkedIn.vue';
   import Email from '@/components/icons/IconEmail.vue';
+  import Modal from '@/components/Modal.vue';
+  import EmailForm from '@/components/EmailForm.vue';
 
+  const isFormOpen = ref(false);
   const matomo = useMatomo();
   const { isUserOptedOut } = storeToRefs(useGlobalStore());
   const currentYear = new Date().getFullYear();
@@ -41,11 +58,16 @@
       title: 'Visit my LinkedIn profile.',
       trackTag: 'LinkedIn Link',
     },
-    { src: Email, url: 'mailto:dankc@pm.me', title: 'Send me an email.', trackTag: 'Email Link' },
+    { src: Email, url: 'javascript:void(0)', title: 'Send me an email.', trackTag: '' },
   ];
 
   const track = (description: string) => {
     if (!isUserOptedOut.value) matomo.value?.trackEvent('Footer', 'Click', description);
+  };
+
+  const toggleForm = () => {
+    isFormOpen.value = !isFormOpen.value;
+    track('Footer Email Link');
   };
 </script>
 

@@ -23,13 +23,13 @@
   }>();
 
   const servicesRef = ref();
-  const { changeActiveRoute } = useGlobalStore();
+  const { changeActiveSection } = useGlobalStore();
 
   const callback: IntersectionObserverCallback = (entries) => {
     entries.forEach((entry) => {
       const { isIntersecting } = entry;
       if (isIntersecting) {
-        changeActiveRoute('services');
+        changeActiveSection('services');
       }
     });
   };

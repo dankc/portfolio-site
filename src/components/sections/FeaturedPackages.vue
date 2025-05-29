@@ -43,6 +43,7 @@
 </template>
 
 <script setup lang="ts">
+  import type { IPackageSectionFields, ISectionFields } from '@/types/contentful-generated-types';
   import { computed, type ComputedRef, ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useMatomo, type MatomoInstance } from 'vue3-matomo';
@@ -51,14 +52,13 @@
   import Container from '@/components/Container.vue';
   import IntersectionObserver from '@/components/IntersectionObserver.vue';
   import TabView from '@/components/TabView.vue';
-  import type { IPackageSectionFields, ISectionFields } from '@/types/contentful-generated-types';
 
   const { data } = defineProps<{
     data: ISectionFields & { sectionContentList: IPackageSectionFields[] };
   }>();
 
   // const { copyToClipboard } = useClipboard();
-  const { changeActiveRoute } = useGlobalStore();
+  const { changeActiveSection } = useGlobalStore();
   const { isUserOptedOut } = storeToRefs(useGlobalStore());
 
   const matomo = useMatomo();
@@ -90,7 +90,7 @@
     entries.forEach((entry) => {
       const { isIntersecting } = entry;
       if (isIntersecting) {
-        changeActiveRoute('feat-project');
+        changeActiveSection('feat-project');
       }
     });
   };

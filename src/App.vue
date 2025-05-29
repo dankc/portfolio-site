@@ -1,22 +1,21 @@
 <template>
-  <Nav ref="global-nav" :class="{ 'modal-open': isModalOpen }" />
+  <Nav ref="global-nav" />
 
   <div class="page-body">
     <router-view v-slot="{ Component, route }">
       <template v-if="Component">
-        <transition name="blur">
+        <Transition name="blur" mode="in-out">
           <Suspense timeout="0">
             <template #default>
               <component
                 :is="Component"
                 :key="route.path"
-                :class="{ 'modal-open': isModalOpen }"
                 :style="{ '--header-height': `${headerHeight}px`, '--footer-height': `${footerHeight}px` }"
               />
             </template>
             <template #fallback> <Loading /> </template>
           </Suspense>
-        </transition>
+        </Transition>
       </template>
     </router-view>
     <div v-if="fetchError" class="error">
@@ -25,7 +24,7 @@
     </div>
   </div>
 
-  <Footer ref="global-footer" :class="{ 'modal-open': isModalOpen }" />
+  <Footer ref="global-footer" />
 </template>
 
 <script setup lang="ts">
@@ -35,13 +34,15 @@
   import { useGlobalStore } from '@/stores/global';
   import { useElementHeight } from '@/composables/useElementHeight.ts';
   import { useMeta } from '@/composables/useMeta.ts';
+  import { useMatomo } from 'vue3-matomo';
   import MetaTags from '@/data/meta-tags.json';
   import Nav from '@/components/Nav.vue';
   import Footer from '@/components/Footer.vue';
   import Loading from '@/views/Loading.vue';
 
   const { go } = useRouter();
-  const { isModalOpen, headerHeight, footerHeight } = storeToRefs(useGlobalStore());
+  const matomo = useMatomo();
+  const { headerHeight, footerHeight } = storeToRefs(useGlobalStore());
   const { setMeta } = useMeta();
   setMeta({
     ...MetaTags,
@@ -53,15 +54,16 @@
     go(0);
   };
 
-  const globalNav = useTemplateRef('global-nav');
-  const globalFooter = useTemplateRef('global-footer');
+  const globalNav = useTemplateRef<ComponentInstance<HTMLElement>>('global-nav');
+  const globalFooter = useTemplateRef<ComponentInstance<HTMLElement>>('global-footer');
 
   onMounted(() => {
-    headerHeight.value = useElementHeight((globalNav.value as ComponentInstance<HTMLElement>).$el);
-    footerHeight.value = useElementHeight((globalFooter.value as ComponentInstance<HTMLElement>).$el);
+    headerHeight.value = useElementHeight(globalNav.value?.$el);
+    footerHeight.value = useElementHeight(globalFooter.value?.$el);
   });
 
   onErrorCaptured((error, vm, info) => {
+    matomo.value?.trackEvent('Site Health', 'Error', 'Error captured in App.vue');
     fetchError.value = error.message || 'An error occurred while fetching page data';
     console.error('Error captured:', error);
     console.error('Vue component:', vm);
@@ -72,6 +74,10 @@
 
 <style scoped lang="postcss">
   .error {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
     color: red;
     padding: 1rem;
     text-align: center;

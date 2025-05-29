@@ -15,8 +15,6 @@ interface BaseFetchOptions {
 }
 
 export const useRest = () => {
-  const endpoint = import.meta.env.DEV ? 'http://localhost:3000/api' : 'https://kiser.codes/api';
-
   const baseFetch = async (path: string = '', options?: BaseFetchOptions): Promise<Response> => {
     options = {
       method: 'GET',
@@ -35,7 +33,7 @@ export const useRest = () => {
     };
     if (import.meta.env.DEV) fetchOptions.mode = 'cors';
 
-    const url = `${endpoint}/${path}`;
+    const url = `/api/${path}`;
     return await fetch(url, fetchOptions);
   };
 
@@ -45,14 +43,15 @@ export const useRest = () => {
     const json = await response.json();
 
     let content = resolveResponse(json.data);
-    content = flattenAllFields(content);
+    // Single entries aren't in an items array - resolveResponse will return an empty one
+    content = flattenAllFields(content.length ? content : [json.data]);
     pending.value = false;
 
     return {
-      data: ref(content[0]),
+      data: ref(content[0] || null),
       pending,
-      success: ref(true),
-      error: ref(json.success ? json.error : ''),
+      success: ref(json.success),
+      error: ref(!json.success ? json.error : ''),
     } as FetchResponse<T>;
   };
 

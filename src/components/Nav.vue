@@ -2,8 +2,10 @@
   <div class="nav" ref="nav">
     <Container>
       <div class="nav__inner">
-        <div class="nav__logo" @click="logoClickEvent">
-          <IconLogoMonoWhite />
+        <div class="nav__logo">
+          <button type="button" role="link" aria-label="Home link" @click="logoClickEvent">
+            <IconLogoMonoWhite />
+          </button>
         </div>
         <div class="nav__hamburger-container">
           <button
@@ -13,6 +15,7 @@
             role="switch"
             aria-label="Toggle Menu"
             name="menu"
+            :aria-expanded="isMenuOpen"
           ></button>
         </div>
         <nav class="nav__content" :class="{ open: isMenuOpen }">
@@ -21,20 +24,30 @@
             :key="name"
             class="nav__item"
             :class="{
-              active: name === activeRoute && isTallEnoughForIO,
+              active: name === activeSection && isTallEnoughForIO,
               'dt-hidden': display === 'mobile',
             }"
             :to="{
-              path: '/',
+              path: `/${to}`,
               hash: to,
             }"
           >
             {{ text }}
           </router-link>
-          <a class="nav__item" href="mailto:dankc@pm.me" @click="track('Contact Link')">Contact</a>
+          <a href="javascript:void(0)" class="nav__item" @click.prevent="toggleForm()">Contact</a>
         </nav>
       </div>
     </Container>
+    <teleport to="body">
+      <Modal
+        :toggle-on="isFormOpen"
+        :transition="{ name: 'scale', appear: true }"
+        :close-button-inside="true"
+        @on-close="toggleForm"
+      >
+        <EmailForm :close-cb="toggleForm" />
+      </Modal>
+    </teleport>
   </div>
 </template>
 
@@ -47,13 +60,16 @@
   import { useScroll } from '@/composables/useScroll.ts';
   import { links } from '@/data/nav.json';
   import IconLogoMonoWhite from '@/components/icons/IconLogoMonoWhite.vue';
-  import Container from './Container.vue';
+  import Container from '@/components/Container.vue';
+  import EmailForm from '@/components/EmailForm.vue';
+  import Modal from '@/components/Modal.vue';
 
   const matomo = useMatomo();
   const { scrollTop } = useScroll();
-  const { activeRoute, isUserOptedOut, isTallEnoughForIO } = storeToRefs(useGlobalStore());
+  const { activeSection, isUserOptedOut, isTallEnoughForIO } = storeToRefs(useGlobalStore());
   const { currentRoute, push } = useRouter();
   const isMenuOpen = ref(false);
+  const isFormOpen = ref(false);
   const mediaQuery = window.matchMedia('(min-width: 600px)');
 
   const closeMenuOnDt = ({ matches }: MediaQueryListEvent) => {
@@ -71,6 +87,10 @@
     } else {
       push('/');
     }
+  };
+  const toggleForm = (): void => {
+    isFormOpen.value = !isFormOpen.value;
+    if (isFormOpen.value) track('Nav Contact Link');
   };
 
   const track = (description: string) => {

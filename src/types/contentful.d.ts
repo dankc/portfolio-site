@@ -10,9 +10,14 @@ import type {
   ISectionFields,
 } from './contentful-generated-types';
 
-type ExtendedPageFields = Omit<IPageFields, 'body'> & {
-  body: (IHero | ISection | IPackage | ISample | IDetails | IPill | IButton)[];
-};
+type ContentfulEntryFields =
+  | IButtonFields
+  | IDetailsFields
+  | IHeroFields
+  | IPackageSectionFields
+  | IPillFields
+  | ISampleFields
+  | ISectionFields;
 
 interface ContentfulSys {
   type: string;
@@ -46,7 +51,7 @@ type FlattenableArray = Array<FlattenableValue>;
 
 export type {
   ContentfulEntry,
-  ExtendedPageFields,
+  ContentfulEntryFields,
   FlattenableValue,
   FlattenableArray,
   FlattenableObject,
