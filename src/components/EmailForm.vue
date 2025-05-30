@@ -257,7 +257,6 @@
 
   onMounted(async () => {
     const { data } = await getContentfulEntry<IDetailsFields>('/3n0vTvj2hNSyPdCLrUE675');
-    console.log(data.value);
     if (data.value) content.value = data.value;
   });
 </script>
