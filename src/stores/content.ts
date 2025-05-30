@@ -58,7 +58,6 @@ export const useContentStore = defineStore('content', () => {
 
   // Get all data for a single entry, cache it, and serve the cache if it's there
   const getContentfulEntry = async <T>(entry: string): Promise<FetchResponse<T>> => {
-    console.log('hello?');
     const { getContent } = useRest();
     const cacheKey = `entry-${entry}`;
     const cachedContent = getCache(cacheKey);
@@ -72,7 +71,6 @@ export const useContentStore = defineStore('content', () => {
     }
 
     const { data, pending, success, error } = await getContent<T>(`${entry}`);
-    console.log('fetch successful?', data.value, success.value);
     if (success.value && data.value) {
       setCache(cacheKey, data.value);
     }

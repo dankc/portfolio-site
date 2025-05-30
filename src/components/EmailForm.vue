@@ -223,7 +223,7 @@
       };
       const processedForm = flattenValidateFormValues();
       // Early return if someone bypassed validation by enabling the button
-      if (Object.keys(form).some((key) => !form[key as keyof EmailForm].isValid)) {
+      if (Object.keys(form).some((key) => form[key as keyof EmailForm].required && !form[key as keyof EmailForm].isValid)) {
         if (!isUserOptedOut) matomo.value?.trackEvent('Email form', 'Send', 'Sidestepped Validation');
         return;
       }
@@ -257,7 +257,6 @@
 
   onMounted(async () => {
     const { data } = await getContentfulEntry<IDetailsFields>('/3n0vTvj2hNSyPdCLrUE675');
-    console.log(data.value);
     if (data.value) content.value = data.value;
   });
 </script>
