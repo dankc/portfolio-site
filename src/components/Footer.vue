@@ -16,7 +16,7 @@
         </li>
       </ul>
     </Container>
-    <teleport to="body">
+    <Teleport to="body">
       <Modal
         :toggle-on="isFormOpen"
         :transition="{ name: 'scale', appear: true }"
@@ -25,7 +25,7 @@
       >
         <EmailForm :close-cb="toggleForm" />
       </Modal>
-    </teleport>
+    </Teleport>
   </footer>
 </template>
 
