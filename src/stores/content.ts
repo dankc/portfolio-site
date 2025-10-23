@@ -2,11 +2,13 @@ import { ref, toRaw, type Ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useRest, type FetchResponse } from '@/composables/useRest.ts';
 import type { IPageFields, ContentfulEntryFields } from '@/types/contentful';
+import { useRoute } from 'vue-router';
 
 type ContentStore = Record<string, IPageFields | ContentfulEntryFields>;
 
 export const useContentStore = defineStore('content', () => {
   const contentStore = ref<ContentStore>({});
+  const isPreviewEnv = window.location.hostname.split('.')[0] === 'preview' || window.location.hostname === 'localhost';
 
   const getCache = (key: string): unknown => {
     const ttl = 24 * 60 * 60 * 1000; // 24h
@@ -39,7 +41,7 @@ export const useContentStore = defineStore('content', () => {
     const { getContent } = useRest();
     const cacheKey = `page-${slug}`;
     const cachedContent = getCache(cacheKey);
-    if (cachedContent) {
+    if (!isPreviewEnv && cachedContent) {
       return {
         data: ref(cachedContent) as Ref<T | null>,
         pending: ref(false),
@@ -50,7 +52,7 @@ export const useContentStore = defineStore('content', () => {
 
     const { data, pending, success, error } = await getContent<T>(`?content_type=page&fields.slug=${slug}&include=3`);
 
-    if (success.value && data.value) {
+    if (success.value && data.value && !isPreviewEnv) {
       setCache(cacheKey, data.value);
     }
     return { data, pending, success, error };
@@ -61,7 +63,7 @@ export const useContentStore = defineStore('content', () => {
     const { getContent } = useRest();
     const cacheKey = `entry-${entry}`;
     const cachedContent = getCache(cacheKey);
-    if (cachedContent) {
+    if (!isPreviewEnv && cachedContent) {
       return {
         data: ref(cachedContent) as Ref<T | null>,
         pending: ref(false),
@@ -71,7 +73,7 @@ export const useContentStore = defineStore('content', () => {
     }
 
     const { data, pending, success, error } = await getContent<T>(`${entry}`);
-    if (success.value && data.value) {
+    if (success.value && data.value && !isPreviewEnv) {
       setCache(cacheKey, data.value);
     }
     return { data, pending, success, error };
