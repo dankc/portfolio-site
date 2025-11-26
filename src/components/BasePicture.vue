@@ -5,21 +5,22 @@
         <source
           v-for="(src, index) of srcset"
           :key="`${key}-${index}`"
-          :srcset="src"
+          :src="src"
           :media="getMediaQuery(key)"
           :type="getType(src)"
         />
       </template>
-      <source v-else :srcset="srcset" :key="key" :media="getMediaQuery(key)" :type="getType(srcset || '')" />
+      <source v-else :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${srcset}`" :key="key" :media="getMediaQuery(key)" :type="getType(srcset || '')" />
     </template>
-    <img :src="sources.lg" :alt />
+    <img :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${sources.lg}`" :alt :loading />
   </picture>
 </template>
 
 <script setup lang="ts">
-  const { sources, alt = '' } = defineProps<{
+  const { sources, alt = '', loading = 'lazy' } = defineProps<{
     sources: { sm?: string; lg?: string };
     alt?: string;
+    loading?: 'lazy' | 'eager';
   }>();
 
   function getType(src: string) {
