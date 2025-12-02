@@ -10,14 +10,28 @@
           :type="getType(src)"
         />
       </template>
-      <source v-else :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${srcset}`" :key="key" :media="getMediaQuery(key)" :type="getType(srcset || '')" />
+      <source
+        v-else
+        :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${srcset}`"
+        :key="key"
+        :media="getMediaQuery(key)"
+        :type="getType(srcset || '')"
+      />
     </template>
-    <img :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${sources.lg}`" :alt :loading />
+    <img
+      :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${sources.sm || sources.lg}`"
+      :alt
+      :loading
+    />
   </picture>
 </template>
 
 <script setup lang="ts">
-  const { sources, alt = '', loading = 'lazy' } = defineProps<{
+  const {
+    sources,
+    alt = '',
+    loading = 'lazy',
+  } = defineProps<{
     sources: { sm?: string; lg?: string };
     alt?: string;
     loading?: 'lazy' | 'eager';
