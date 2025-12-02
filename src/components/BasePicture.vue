@@ -5,14 +5,14 @@
         <source
           v-for="(src, index) of srcset"
           :key="`${key}-${index}`"
-          :src="src"
+          :srcset="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${srcset}`"
           :media="getMediaQuery(key)"
           :type="getType(src)"
         />
       </template>
       <source
         v-else
-        :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${srcset}`"
+        :srcset="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${srcset}`"
         :key="key"
         :media="getMediaQuery(key)"
         :type="getType(srcset || '')"
@@ -47,4 +47,6 @@
     if (mqString === 'lg') return '(min-width: 728px)';
     return '(max-width: 727px)';
   }
+
+  function createSrcset(sources: string[]) {}
 </script>
