@@ -35,7 +35,13 @@
           </TabView>
         </div>
         <div class="feat-proj__image">
-          <img :src="requireImage(activeContent?.image || '')" :alt="`${activeContent?.name} logo`" width="300" height="220" />
+          <img
+            :src="requireImage(activeContent?.image || '')"
+            :alt="`${activeContent?.name} logo`"
+            fetchpriority="high"
+            width="300"
+            height="220"
+          />
         </div>
       </Container>
     </section>
