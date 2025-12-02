@@ -47,8 +47,9 @@
           <BasePicture
             v-if="selectedWork?.srcLg && selectedWork?.srcSm"
             :sources="{ lg: selectedWork.srcLg, sm: selectedWork.srcSm }"
+            :alt="selectedWork?.altText || ''"
           />
-          <img v-else :src="selectedWork?.srcLg" alt="" />
+          <img v-else :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${selectedWork?.srcLg}`" :alt="selectedWork?.altText || ''" loading="lazy" />
         </div>
       </div>
     </Modal>
