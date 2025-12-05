@@ -126,12 +126,8 @@
       position: relative;
       background-color: var(--red-bold);
       color: var(--white);
-      flex-grow: 0;
+      flex-grow: 1;
       flex-shrink: 1.25;
-
-      @media (min-width: 600px) {
-        flex-grow: 1;
-      }
 
       &::before {
         content: '';
@@ -139,10 +135,10 @@
         width: 50vw;
         position: absolute;
         top: 0;
-        left: -90%;
         bottom: 0;
         z-index: -1;
         background-color: var(--red-bold);
+        transform: translateX(-100%);
       }
 
       & svg {
@@ -158,6 +154,7 @@
     &__hamburger-container {
       display: flex;
       align-items: center;
+      flex-grow: 1;
 
       @media (min-width: 600px) {
         display: none;
