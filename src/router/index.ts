@@ -17,6 +17,11 @@ export default createRouter({
       component: () => import('../views/PrivacyPolicy.vue'),
     },
     {
+      path: '/react',
+      name: 'ReactApp',
+      component: () => import('../views/ReactApp.vue'),
+    },
+    {
       path: '/:pathMatch(.*)',
       name: '404',
       component: () => import('../views/404.vue'),

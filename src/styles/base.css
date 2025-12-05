@@ -20,6 +20,9 @@ body {
   position: relative;
   font-family: var(--f-sans);
   font-size: var(--baseline-font-size);
+  container-name: viewport;
+  container-type: inline-size;
+  overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

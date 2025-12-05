@@ -23,6 +23,12 @@
       "to": "#about",
       "text": "About",
       "display": "always"
+    },
+    {
+      "name": "ReactApp",
+      "to": "react",
+      "text": "React",
+      "display": "always"
     }
   ]
 }

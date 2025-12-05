@@ -32,6 +32,7 @@
     "vue3-matomo": "^1.1.0"
   },
   "devDependencies": {
+    "@module-federation/vite": "^1.9.2",
     "@stylistic/eslint-plugin-ts": "^4.2.0",
     "@tsconfig/node22": "^22.0.2",
     "@types/contentful-resolve-response": "^0.1.33",
