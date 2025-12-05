@@ -132,13 +132,13 @@
       &::before {
         content: '';
         display: block;
-        width: 50vw;
+        width: 100vw;
         position: absolute;
         top: 0;
         bottom: 0;
         z-index: -1;
         background-color: var(--red-bold);
-        transform: translateX(-100%);
+        transform: translateX(-99%);
       }
 
       & svg {
