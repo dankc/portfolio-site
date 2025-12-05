@@ -66,7 +66,7 @@ export default defineConfig({
           entry:
             process.env.NODE_ENV === 'development'
               ? 'http://localhost:4173/remoteEntry.js'
-              : '/crypto-tracker-app/assets/remoteEntry.js',
+              : '/crypto-tracker-app/remoteEntry.js',
           type: 'module',
           name: 'react_app',
         },
