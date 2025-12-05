@@ -1,8 +1,10 @@
-@import './typography.css';
-@import './animations.css';
-@import './transitions.css';
-@import './colors.css';
-@import './misc-vars.css';
-@import './sizes.css';
+@layer base;
 
-@import './base.css';
+@import './typography.css' layer(base);
+@import './animations.css' layer(base);
+@import './transitions.css' layer(base);
+@import './colors.css' layer(base);
+@import './misc-vars.css' layer(base);
+@import './sizes.css' layer(base);
+
+@import './base.css' layer(base);

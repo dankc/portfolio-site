@@ -8,6 +8,7 @@ import stylelint from 'vite-plugin-stylelint';
 import autoprefixer from 'autoprefixer';
 import postCssNested from 'postcss-nested';
 import banner from 'vite-plugin-banner';
+import { federation } from '@module-federation/vite';
 
 const isDev = process.env.NODE_ENV === 'development';
 const buildDateTime = new Date().toLocaleString('en-US', {
@@ -18,6 +19,7 @@ const buildDateTime = new Date().toLocaleString('en-US', {
   hour: 'numeric',
   minute: 'numeric',
   hour12: true,
+  timeZone: 'UTC',
 });
 
 // https://vite.dev/config/
@@ -57,6 +59,19 @@ export default defineConfig({
       },
     }),
     banner(`/*** Built on ${buildDateTime} ***/`),
+    federation({
+      name: 'vue_app_host',
+      remotes: {
+        react_app: {
+          entry:
+            process.env.NODE_ENV === 'development'
+              ? 'http://localhost:4173/remoteEntry.js'
+              : '/crypto-tracker-app/assets/remoteEntry.js',
+          type: 'module',
+          name: 'react_app',
+        },
+      },
+    }),
   ],
   resolve: {
     alias: {

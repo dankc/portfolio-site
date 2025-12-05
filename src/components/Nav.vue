@@ -29,7 +29,7 @@
             }"
             :to="{
               path: `/${to}`,
-              hash: to,
+              hash: to.startsWith('#') ? to : undefined,
             }"
           >
             {{ text }}
@@ -111,12 +111,11 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    background: linear-gradient(to right, var(--red-bold) 50%, rgb(from var(--black) r g b / 80%) 50%);
     backdrop-filter: blur(3px);
 
     &__inner {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      justify-content: space-between;
       font-family: var(--f-mono);
     }
 
@@ -127,6 +126,12 @@
       position: relative;
       background-color: var(--red-bold);
       color: var(--white);
+      flex-grow: 0;
+      flex-shrink: 1.25;
+
+      @media (min-width: 600px) {
+        flex-grow: 1;
+      }
 
       &::before {
         content: '';
@@ -223,6 +228,8 @@
       transition: all 0.33s ease-in-out;
 
       @media (min-width: 600px) {
+        flex-grow: 1.25;
+        flex-shrink: 0;
         justify-content: space-around;
         flex-direction: row;
         width: auto;
