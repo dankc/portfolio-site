@@ -84,6 +84,7 @@ export default defineConfig({
     },
   },
   build: {
+    target: 'esnext',
     minify: !isDev,
     cssMinify: !isDev,
   },
