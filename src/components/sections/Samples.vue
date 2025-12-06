@@ -8,10 +8,12 @@
             <li
               v-for="(sample, index) in data.sectionContentList"
               :key="index"
+              role="listitem"
               title="Click to preview"
-              @click.stop="openModal(sample)"
             >
-              <img :src="sample.thumbnail" alt="Click to preview this work" width="323" height="200" />
+              <button type="button" :aria-label="`Click to view details for ${sample.campaign || sample.client || 'this'} project`" @click.stop="openModal(sample)">
+                <img :src="sample.thumbnail" alt="" width="323" height="200" />
+              </button>
             </li>
           </ul>
         </div>
@@ -20,17 +22,17 @@
   </IntersectionObserver>
 
   <Teleport to="body">
-    <Modal :toggle-on="selectedWork !== undefined" :transition="{ name: 'scale', appear: true }" @on-close="closeModal">
+    <Modal :toggle-on="selectedWork !== undefined" :transition="{ name: 'scale', appear: true }" @on-close="closeModal" headingId="selected-work-heading">
       <div class="work-modal">
         <header class="work-modal__header">
-          <div>
-            <h2 class="work-modal__heading">
+          <hgroup>
+            <h2 class="work-modal__heading" id="selected-work-heading">
               {{ selectedWork?.client }}
             </h2>
-            <h3 class="work-modal__subheading">
+            <p class="work-modal__subheading">
               {{ selectedWork?.campaign || selectedWork?.type }}
-            </h3>
-          </div>
+            </p>
+          </hgroup>
 
           <a
             v-if="selectedWork?.type === 'site'"
@@ -140,6 +142,10 @@
         max-height: 200px;
         overflow: hidden;
         cursor: pointer;
+      }
+
+      button {
+        padding: 0;
       }
 
       img {

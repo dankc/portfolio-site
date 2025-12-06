@@ -1,6 +1,6 @@
 <template>
   <Container class="email-form">
-    <h2 class="email-form__heading">{{ content?.heading }}</h2>
+    <h2 class="email-form__heading" id="email-heading">{{ content?.heading }}</h2>
     <p class="email-form__copy" v-for="(para, index) in content?.paragraphs" :key="index">{{ para }}</p>
     <p class="email-form__disclaimer">*Indicates required field</p>
     <form name="email-form">

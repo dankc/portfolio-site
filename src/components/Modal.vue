@@ -1,19 +1,19 @@
 <template>
-  <dialog ref="dialog-ref">
+  <dialog ref="dialog-ref" :aria-labelledby="headingId" @close="closeModal">
     <aside class="modal" ref="modal-ref" @click.self="closeModal">
-      <button class="modal__close" v-if="!closeButtonDisabled && !closeButtonInside" type="button" @click="closeModal">
+      <button class="modal__close" v-if="!closeButtonDisabled && !closeButtonInside" type="button" aria-label="close" @click="closeModal">
         <IconClose />
       </button>
       <Transition v-if="transition" v-bind="transition" @after-leave="closeAfterTransition">
         <div class="modal__content" v-if="showContent">
-          <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" @click="closeModal">
+          <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" aria-label="close" @click="closeModal">
             <IconClose />
           </button>
           <slot />
         </div>
       </Transition>
       <div class="modal__content" v-else-if="!transition && showContent">
-        <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" @click="closeModal">
+        <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" aria-label="close" @click="closeModal">
           <IconClose />
         </button>
         <slot />
@@ -31,11 +31,13 @@
     transition,
     closeButtonDisabled = false,
     closeButtonInside = false,
+    headingId,
   } = defineProps<{
     toggleOn: boolean;
     transition?: TransitionProps;
     closeButtonDisabled?: boolean;
     closeButtonInside?: boolean;
+    headingId: string;
   }>();
   const dialogRef = useTemplateRef<HTMLDialogElement>('dialog-ref');
   const showContent = ref(false);

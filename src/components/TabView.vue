@@ -2,19 +2,20 @@
   <div class="tab-view">
     <div class="tab-view__nav-container">
       <slot name="nav" />
-      <nav class="tab-view__nav">
-        <div
+      <nav class="tab-view__nav" role="tablist">
+        <button
           v-for="(tab, index) of tabs"
           :key="index"
           class="tab-view__nav-item"
           :class="{ active: currentTab === index }"
+          role="tab"
           @click="changeTab(index)"
         >
           {{ tab }}
-        </div>
+        </button>
       </nav>
     </div>
-    <div class="tab-view__pane">
+    <div class="tab-view__pane" role="tabpanel" aria-labelledby="tab-label">
       <slot />
     </div>
   </div>

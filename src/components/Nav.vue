@@ -43,6 +43,7 @@
         :toggle-on="isFormOpen"
         :transition="{ name: 'scale', appear: true }"
         :close-button-inside="true"
+        heading-id="email-heading"
         @on-close="toggleForm"
       >
         <EmailForm :close-cb="toggleForm" />

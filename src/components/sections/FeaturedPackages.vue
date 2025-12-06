@@ -221,8 +221,10 @@
         border-top-right-radius: 8px;
         border-bottom: 3px solid transparent;
         transition: all 0.2s ease-in-out;
+        color: var(--black);
 
-        &:hover {
+        &:hover,
+        &:focus {
           background-color: rgb(from var(--black) r g b / 20%);
         }
       }
