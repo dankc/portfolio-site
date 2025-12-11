@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
   import type { HomePage, HomePageData } from '@/types/home-content';
+  import { onMounted } from 'vue';
   import { useRoute } from 'vue-router';
   import { useMeta } from '@/composables/useMeta.ts';
   import { useContentStore } from '@/stores/content.ts';
@@ -28,7 +29,7 @@
   import WorksView from '@/components/sections/Samples.vue';
   import Features from '@/components/sections/Services.vue';
 
-  const { path } = useRoute();
+  const { path, hash } = useRoute();
   const { getContentfulPage } = useContentStore();
   const { setMeta } = useMeta();
   setMeta({
@@ -49,4 +50,11 @@
   if (error.value) {
     throw Error(error.value);
   }
+
+  onMounted(() => {
+    if (hash) {
+      document.querySelector(hash)?.scrollIntoView();
+    }
+  });
+
 </script>

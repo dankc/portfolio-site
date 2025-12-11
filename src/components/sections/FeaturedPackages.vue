@@ -9,7 +9,7 @@
                 <span class="eyebrow">{{ data.heading }}</span>
               </h2>
             </template>
-            <h3 class="feat-proj__heading">
+            <h3 class="feat-proj__heading" id="tab-label">
               {{ activeContent?.name }}
             </h3>
             <p class="feat-proj__paragraph">
@@ -221,8 +221,10 @@
         border-top-right-radius: 8px;
         border-bottom: 3px solid transparent;
         transition: all 0.2s ease-in-out;
+        color: var(--black);
 
-        &:hover {
+        &:hover,
+        &:focus {
           background-color: rgb(from var(--black) r g b / 20%);
         }
       }

@@ -65,7 +65,7 @@
       position: relative;
       color: var(--white);
       font-family: var(--f-mono);
-      font-size: 6rem;
+      font-size: clamp(5rem, 20vw, 6rem);
       line-height: 1;
     }
 
