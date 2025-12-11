@@ -155,15 +155,11 @@
       position: relative;
 
       @media (min-width: 1024px) {
-        margin-left: 1.5rem;
+        flex: 1 0 40%;
       }
 
       & img {
         width: 100%;
-
-        @media (min-width: 1024px) {
-          width: auto;
-        }
       }
     }
 
@@ -176,6 +172,7 @@
       display: flex;
       align-items: center;
       flex-direction: column-reverse;
+      gap: 1.5rem;
 
       @media (min-width: 600px) and (max-width: 795px) {
         padding-right: calc(var(--angle-depth) + 20px);
