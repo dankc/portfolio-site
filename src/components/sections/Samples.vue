@@ -8,7 +8,6 @@
             <li
               v-for="(sample, index) in data.sectionContentList"
               :key="index"
-              role="listitem"
             >
               <button type="button" :aria-label="`Click to view details for ${sample.campaign || sample.client || 'this'} project`" @click.stop="openModal(sample)">
                 <img :src="sample.thumbnail" alt="" width="323" height="200" />
