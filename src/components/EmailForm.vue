@@ -78,11 +78,16 @@
     <div v-if="emailResponse !== null || sendPending" class="res-message">
       <transition-group tag="div" class="res-message__container" name="scale" appear>
         <div v-if="sendPending" key="email-sending" class="res-message__content">
-          <IconEmailSending class="res-message__icon" />
+          <IconEmailSending aria-label="Processing email send" role="img" class="res-message__icon" />
           <h3 class="res-message__heading">Sending email</h3>
         </div>
         <div v-else-if="emailResponse !== null" key="email-response" class="res-message__content">
-          <component :is="emailResponse.success ? IconEmailSent : IconEmailFailed" class="res-message__icon" />
+          <component
+            :is="emailResponse.success ? IconEmailSent : IconEmailFailed"
+            :aria-label="emailResponse.success ? 'Email sent successfully' : 'Email failed to send'"
+            role="img"
+            class="res-message__icon"
+          />
           <h3 class="res-message__heading">
             {{ emailResponse.success === false ? 'Email failed to send' : 'Email received!' }}
           </h3>

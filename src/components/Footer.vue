@@ -7,11 +7,11 @@
       </p>
       <ul class="footer__icon-container">
         <li class="footer__icon" v-for="(icon, key) in icons" :key>
-          <a v-if="typeof Email" :href="icon.url" :title="icon.title" @click="toggleForm">
-            <component :is="icon.src" />
+          <a v-if="typeof Email" :href="icon.url" :aria-label="icon.label" @click="toggleForm">
+            <component :is="icon.src" aria-hidden="true" />
           </a>
-          <a v-else :href="icon.url" :title="icon.title" @click="track(icon.trackTag)">
-            <component :is="icon.src" />
+          <a v-else :href="icon.url" :aria-label="icon.label" @click="track(icon.trackTag)">
+            <component :is="icon.src" aria-hidden="true" />
           </a>
         </li>
       </ul>
@@ -50,16 +50,16 @@
     {
       src: GitHub,
       url: 'https://github.com/dankc/',
-      title: 'Visit my Github profile.',
+      label: 'Visit my Github profile.',
       trackTag: 'GitHub Link',
     },
     {
       src: LinkedIn,
       url: 'https://www.linkedin.com/in/dankiser1/',
-      title: 'Visit my LinkedIn profile.',
+      label: 'Visit my LinkedIn profile.',
       trackTag: 'LinkedIn Link',
     },
-    { src: Email, url: 'javascript:void(0)', title: 'Send me an email.', trackTag: '' },
+    { src: Email, url: 'javascript:void(0)', label: 'Send me an email.', trackTag: '' },
   ];
 
   const track = (description: string) => {

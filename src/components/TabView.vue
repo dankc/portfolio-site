@@ -2,7 +2,7 @@
   <div class="tab-view">
     <div class="tab-view__nav-container">
       <slot name="nav" />
-      <nav class="tab-view__nav" role="tablist">
+      <nav class="tab-view__nav" role="tablist" aria-live="polite">
         <button
           v-for="(tab, index) of tabs"
           :key="index"
@@ -15,7 +15,7 @@
         </button>
       </nav>
     </div>
-    <div class="tab-view__pane" role="tabpanel" aria-labelledby="tab-label">
+    <div class="tab-view__pane" role="tabpanel" aria-labelledby="tab-label" aria-live="polite">
       <slot />
     </div>
   </div>

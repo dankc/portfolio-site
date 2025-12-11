@@ -1,10 +1,10 @@
 <template>
-  <div class="nav" ref="nav">
+  <header class="nav" ref="nav">
     <Container>
       <div class="nav__inner">
         <div class="nav__logo">
           <button type="button" role="link" aria-label="Home link" @click="logoClickEvent">
-            <IconLogoMonoWhite />
+            <IconLogoMonoWhite aria-hidden="true" />
           </button>
         </div>
         <div class="nav__hamburger-container">
@@ -29,7 +29,7 @@
             }"
             :to="{
               path: `/${to}`,
-              hash: to.startsWith('#') ? to : undefined,
+              hash: to.startsWith('#') ? to : undefined
             }"
           >
             {{ text }}
@@ -49,7 +49,7 @@
         <EmailForm :close-cb="toggleForm" />
       </Modal>
     </Teleport>
-  </div>
+  </header>
 </template>
 
 <script setup lang="ts">
@@ -118,17 +118,7 @@
       display: flex;
       justify-content: space-between;
       font-family: var(--f-mono);
-    }
-
-    &__logo {
-      display: flex;
-      align-items: center;
-      padding: 15px 0;
       position: relative;
-      background-color: var(--red-bold);
-      color: var(--white);
-      flex-grow: 1;
-      flex-shrink: 1.25;
 
       &::before {
         content: '';
@@ -137,9 +127,36 @@
         position: absolute;
         top: 0;
         bottom: 0;
+        right: 100%;
         z-index: -1;
         background-color: var(--red-bold);
-        transform: translateX(-99%);
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        width: 100vw;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 100%;
+        z-index: -1;
+        background-color: rgb(from var(--black) r g b / 80%);
+      }
+    }
+
+    &__logo {
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      background-color: var(--red-bold);
+      color: var(--white);
+      flex-grow: 1;
+      flex-shrink: 1.25;
+      flex-basis: 50%;
+
+      @media (min-width: 600px) {
+        flex-basis: auto;
       }
 
       & svg {
@@ -156,6 +173,8 @@
       display: flex;
       align-items: center;
       flex-grow: 1;
+      flex-basis: 50%;
+      background-color: rgb(from var(--black) r g b / 80%);
 
       @media (min-width: 600px) {
         display: none;
@@ -172,7 +191,6 @@
       border: none;
       border-top: 2px solid var(--yellow);
       border-bottom: 2px solid var(--yellow);
-      background: transparent;
       position: relative;
       appearance: none;
       cursor: pointer;
@@ -211,9 +229,8 @@
       justify-content: flex-end;
       align-items: center;
       flex-direction: column;
-      padding-right: var(--gutter);
-      position: absolute;
-      width: 50%;
+      position: fixed;
+      width: 50vw;
       bottom: 0;
       right: 0;
       z-index: -1;
@@ -223,7 +240,7 @@
       opacity: 0;
       overflow: hidden;
       transform: translateY(0);
-      transition: all 0.33s ease-in-out;
+      transition: all 0.33s ease-in-out, width 0s linear;
 
       @media (min-width: 600px) {
         flex-grow: 1.25;
@@ -237,7 +254,6 @@
         right: unset;
         z-index: 0;
         opacity: 1;
-        background-color: transparent;
         backdrop-filter: initial;
       }
 

@@ -9,7 +9,6 @@
               v-for="(sample, index) in data.sectionContentList"
               :key="index"
               role="listitem"
-              title="Click to preview"
             >
               <button type="button" :aria-label="`Click to view details for ${sample.campaign || sample.client || 'this'} project`" @click.stop="openModal(sample)">
                 <img :src="sample.thumbnail" alt="" width="323" height="200" />
@@ -139,12 +138,12 @@
 
       li {
         background-color: var(--off-black);
-        max-height: 200px;
         overflow: hidden;
         cursor: pointer;
       }
 
       button {
+        width: 100%;
         padding: 0;
       }
 

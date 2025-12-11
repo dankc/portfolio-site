@@ -1,20 +1,20 @@
 <template>
   <dialog ref="dialog-ref" :aria-labelledby="headingId" @close="closeModal">
     <aside class="modal" ref="modal-ref" @click.self="closeModal">
-      <button class="modal__close" v-if="!closeButtonDisabled && !closeButtonInside" type="button" aria-label="close" @click="closeModal">
-        <IconClose />
+      <button class="modal__close" v-if="!closeButtonDisabled && !closeButtonInside" type="button" aria-label="Close dialog" @click="closeModal">
+        <IconClose aria-hidden="true" />
       </button>
       <Transition v-if="transition" v-bind="transition" @after-leave="closeAfterTransition">
         <div class="modal__content" v-if="showContent">
-          <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" aria-label="close" @click="closeModal">
-            <IconClose />
+          <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" aria-label="Close dialog" @click="closeModal">
+            <IconClose aria-hidden="true" />
           </button>
           <slot />
         </div>
       </Transition>
       <div class="modal__content" v-else-if="!transition && showContent">
-        <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" aria-label="close" @click="closeModal">
-          <IconClose />
+        <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" aria-label="Close dialog" @click="closeModal">
+          <IconClose aria-hidden="true" />
         </button>
         <slot />
       </div>

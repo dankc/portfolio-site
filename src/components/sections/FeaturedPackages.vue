@@ -9,7 +9,7 @@
                 <span class="eyebrow">{{ data.heading }}</span>
               </h2>
             </template>
-            <h3 class="feat-proj__heading">
+            <h3 class="feat-proj__heading" id="tab-label">
               {{ activeContent?.name }}
             </h3>
             <p class="feat-proj__paragraph">
