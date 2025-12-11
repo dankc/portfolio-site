@@ -9,7 +9,7 @@
                 <span class="eyebrow">{{ data.heading }}</span>
               </h2>
             </template>
-            <h3 class="feat-proj__heading">
+            <h3 class="feat-proj__heading" id="tab-label">
               {{ activeContent?.name }}
             </h3>
             <p class="feat-proj__paragraph">
@@ -155,15 +155,11 @@
       position: relative;
 
       @media (min-width: 1024px) {
-        margin-left: 1.5rem;
+        flex: 1 0 40%;
       }
 
       & img {
         width: 100%;
-
-        @media (min-width: 1024px) {
-          width: auto;
-        }
       }
     }
 
@@ -176,6 +172,7 @@
       display: flex;
       align-items: center;
       flex-direction: column-reverse;
+      gap: 1.5rem;
 
       @media (min-width: 600px) and (max-width: 795px) {
         padding-right: calc(var(--angle-depth) + 20px);
@@ -221,8 +218,10 @@
         border-top-right-radius: 8px;
         border-bottom: 3px solid transparent;
         transition: all 0.2s ease-in-out;
+        color: var(--black);
 
-        &:hover {
+        &:hover,
+        &:focus {
           background-color: rgb(from var(--black) r g b / 20%);
         }
       }
