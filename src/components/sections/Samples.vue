@@ -5,11 +5,12 @@
         <h2 class="samples__heading">{{ data.heading }}</h2>
         <div class="samples__inner">
           <ul class="samples__grid">
-            <li
-              v-for="(sample, index) in data.sectionContentList"
-              :key="index"
-            >
-              <button type="button" :aria-label="`Click to view details for ${sample.campaign || sample.client || 'this'} project`" @click.stop="openModal(sample)">
+            <li v-for="(sample, index) in data.sectionContentList" :key="index">
+              <button
+                type="button"
+                :aria-label="`Click to view details for ${sample.campaign || sample.client || 'this'} project`"
+                @click.stop="openModal(sample)"
+              >
                 <img :src="sample.thumbnail" alt="" width="323" height="200" />
               </button>
             </li>
@@ -20,7 +21,12 @@
   </IntersectionObserver>
 
   <Teleport to="body">
-    <Modal :toggle-on="selectedWork !== undefined" :transition="{ name: 'scale', appear: true }" @on-close="closeModal" headingId="selected-work-heading">
+    <Modal
+      :toggle-on="selectedWork !== undefined"
+      :transition="{ name: 'scale', appear: true }"
+      @on-close="closeModal"
+      headingId="selected-work-heading"
+    >
       <div class="work-modal">
         <header class="work-modal__header">
           <hgroup>
@@ -49,7 +55,12 @@
             :sources="{ lg: selectedWork.srcLg, sm: selectedWork.srcSm }"
             :alt="selectedWork?.altText || ''"
           />
-          <img v-else :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${selectedWork?.srcLg}`" :alt="selectedWork?.altText || ''" loading="lazy" />
+          <img
+            v-else
+            :src="`https://res.cloudinary.com/dmez1qk98/image/upload/q_65,f_webp,dpr_auto/${selectedWork?.srcLg}`"
+            :alt="selectedWork?.altText || ''"
+            loading="lazy"
+          />
         </div>
       </div>
     </Modal>
@@ -164,7 +175,7 @@
     width: 95%;
     max-width: var(--max-content-width);
     margin: 0 auto;
-    padding: 60px 20px 0;
+    padding: 75px 20px 0;
     color: var(--white);
 
     &__header {
