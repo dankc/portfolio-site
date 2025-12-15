@@ -27,7 +27,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   &:has(dialog[open]) {
-    overflow: hidden;
+    /*overflow: hidden;*/
     touch-action: none;
     -webkit-overflow-scrolling: none;
     overscroll-behavior: none;
@@ -86,9 +86,11 @@ a {
 dialog {
   border: none;
   background: transparent;
+  overscroll-behavior: none;
 
   &::backdrop {
-    background: transparent;
+    background-color: rgb(from var(--black) r g b / 33%);
+    backdrop-filter: blur(var(--blur-amount));
   }
 }
 

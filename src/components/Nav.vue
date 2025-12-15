@@ -12,13 +12,14 @@
             class="nav__hamburger"
             :class="{ active: isMenuOpen }"
             @click="toggleMenu"
-            role="switch"
             aria-label="Toggle Menu"
             name="menu"
             :aria-expanded="isMenuOpen"
+            aria-haspopup="menu"
+            aria-controls="main-nav"
           ></button>
         </div>
-        <nav class="nav__content" :class="{ open: isMenuOpen }">
+        <nav class="nav__content" :class="{ open: isMenuOpen }" id="main-nav">
           <router-link
             v-for="{ name, text, display, to } in links"
             :key="name"

@@ -1,19 +1,37 @@
 <template>
-  <dialog ref="dialog-ref" :aria-labelledby="headingId" @close="closeModal">
+  <dialog ref="dialog-ref" :aria-labelledby="headingId" @close="closeModal" closedby="any">
     <aside class="modal" ref="modal-ref" @click.self="closeModal">
-      <button class="modal__close" v-if="!closeButtonDisabled && !closeButtonInside" type="button" aria-label="Close dialog" @click="closeModal">
+      <button
+        class="modal__close"
+        v-if="!closeButtonDisabled && !closeButtonInside"
+        type="button"
+        aria-label="Close dialog"
+        @click="closeModal"
+      >
         <IconClose aria-hidden="true" />
       </button>
       <Transition v-if="transition" v-bind="transition" @after-leave="closeAfterTransition">
         <div class="modal__content" v-if="showContent">
-          <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" aria-label="Close dialog" @click="closeModal">
+          <button
+            class="modal__close"
+            v-if="!closeButtonDisabled && closeButtonInside"
+            type="button"
+            aria-label="Close dialog"
+            @click="closeModal"
+          >
             <IconClose aria-hidden="true" />
           </button>
           <slot />
         </div>
       </Transition>
       <div class="modal__content" v-else-if="!transition && showContent">
-        <button class="modal__close" v-if="!closeButtonDisabled && closeButtonInside" type="button" aria-label="Close dialog" @click="closeModal">
+        <button
+          class="modal__close"
+          v-if="!closeButtonDisabled && closeButtonInside"
+          type="button"
+          aria-label="Close dialog"
+          @click="closeModal"
+        >
           <IconClose aria-hidden="true" />
         </button>
         <slot />
@@ -78,14 +96,6 @@
     display: block;
     width: 100dvw;
     height: 100dvh;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    background-color: rgb(from var(--black) r g b / 33%);
-    backdrop-filter: blur(var(--blur-amount));
 
     &__close {
       width: fit-content;

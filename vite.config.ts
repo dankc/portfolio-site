@@ -51,7 +51,6 @@ export default defineConfig({
                 convertColors: false,
                 convertPathData: false,
                 inlineStyles: false,
-                removeViewBox: false, // https://github.com/svg/svgo/issues/1128
               },
             },
           },
