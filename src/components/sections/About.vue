@@ -1,28 +1,32 @@
 <template>
-  <IntersectionObserver :callback :target="() => aboutRef">
-    <section class="about" id="about" ref="aboutRef">
-      <div>
-        <h2 class="about__heading">{{ data.heading }}</h2>
-        <p class="about__paragraph" v-for="(paragraph, index) in parsedParagraphs" :key="index" v-html="paragraph"></p>
-      </div>
-      <template v-for="(subsection, index) in data.subSections" :key="index">
-        <div class="about__subsection">
-          <h3 class="about__subsection-heading">{{ subsection.heading }}</h3>
-          <ul class="about__subsection-list">
-            <li v-for="({ bgColor, color, text }, key) in subsection.pills" :key="key">
-              <SkillPill :bg-color="bgColor" :color="color">
-                {{ text }}
-              </SkillPill>
-            </li>
-          </ul>
+  <IntersectionObserver :callback="farIoCallback" :options="{ threshold: 0.25, rootMargin: '0%' }" :target="() => aboutRef">
+    <IntersectionObserver :callback="closeIoCallback" :target="() => aboutRef">
+      <section class="about hidden-section" id="about" ref="aboutRef">
+        <div>
+          <h2 class="about__heading">{{ data.heading }}</h2>
+          <p class="about__paragraph" v-for="(paragraph, index) in parsedParagraphs" :key="index" v-html="paragraph"></p>
         </div>
-      </template>
-    </section>
+        <template v-for="(subsection, index) in data.subSections" :key="index">
+          <div class="about__subsection">
+            <h3 class="about__subsection-heading">{{ subsection.heading }}</h3>
+            <ul class="about__subsection-list">
+              <li v-for="({ bgColor, color, text }, key) in subsection.pills" :key="key">
+                <SkillPill :bg-color="bgColor" :color="color">
+                  {{ text }}
+                </SkillPill>
+              </li>
+            </ul>
+          </div>
+        </template>
+      </section>
+    </IntersectionObserver>
   </IntersectionObserver>
 </template>
 
 <script setup lang="ts">
   import { ref } from 'vue';
+  import { useMatomo } from 'vue3-matomo';
+  import { storeToRefs } from 'pinia';
   import { useGlobalStore } from '@/stores/global.ts';
   import { useParsePlaceholders, type PlaceHolderValues } from '@/composables/useParsePlaceholders.ts';
   import IntersectionObserver from '@/components/IntersectionObserver.vue';
@@ -35,6 +39,8 @@
 
   const { changeActiveSection } = useGlobalStore();
   const { parseCopy } = useParsePlaceholders();
+  const { isUserOptedOut } = storeToRefs(useGlobalStore());
+  const matomo = useMatomo();
   const aboutRef = ref();
 
   const timeDeveloping: number = new Date().getFullYear() - 2014;
@@ -48,12 +54,18 @@
 
   const parsedParagraphs = (data.paragraphs as string[]).map((paragraph) => parseCopy(paragraph, placeholderValues));
 
-  const callback: IntersectionObserverCallback = (entries) => {
-    entries.forEach((entry) => {
-      const { isIntersecting } = entry;
-
+  const closeIoCallback: IntersectionObserverCallback = (entries) => {
+    entries.forEach(({ isIntersecting }) => {
       if (isIntersecting) {
         changeActiveSection('about');
+        if (!isUserOptedOut.value) matomo.value?.trackEvent('Section Viewed', 'About');
+      }
+    });
+  };
+  const farIoCallback: IntersectionObserverCallback = (entries) => {
+    entries.forEach(({ isIntersecting }) => {
+      if (isIntersecting) {
+        aboutRef.value.classList.remove('hidden-section');
       }
     });
   };
@@ -73,6 +85,7 @@
     max-width: var(--max-content-width);
     margin: 2.5rem auto 0;
     padding: 2.5rem var(--gutter) 5rem;
+    transition: all 0.3s ease-out;
 
     &__paragraph {
       margin: 1.5rem auto;

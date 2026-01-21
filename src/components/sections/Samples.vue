@@ -1,23 +1,25 @@
 <template>
-  <IntersectionObserver :callback :target="() => workRef">
-    <section class="samples" ref="workRef" id="work">
-      <Container class="samples__container">
-        <h2 class="samples__heading">{{ data.heading }}</h2>
-        <div class="samples__inner">
-          <ul class="samples__grid">
-            <li v-for="(sample, index) in data.sectionContentList" :key="index">
-              <button
-                type="button"
-                :aria-label="`Click to view details for ${sample.campaign || sample.client || 'this'} project`"
-                @click.stop="openModal(sample)"
-              >
-                <img :src="sample.thumbnail" alt="" width="323" height="200" />
-              </button>
-            </li>
-          </ul>
-        </div>
-      </Container>
-    </section>
+  <IntersectionObserver :callback="farIoCallback" :options="{ threshold: 0.25, rootMargin: '0%' }" :target="() => workRef">
+    <IntersectionObserver :callback="closeIoCallback" :target="() => workRef">
+      <section class="samples hidden-section" ref="workRef" id="work">
+        <Container class="samples__container">
+          <h2 class="samples__heading">{{ data.heading }}</h2>
+          <div class="samples__inner">
+            <ul class="samples__grid">
+              <li v-for="(sample, index) in data.sectionContentList" :key="index">
+                <button
+                  type="button"
+                  :aria-label="`Click to view details for ${sample.campaign || sample.client || 'this'} project`"
+                  @click.stop="openModal(sample)"
+                >
+                  <img :src="sample.thumbnail" alt="" width="323" height="200" />
+                </button>
+              </li>
+            </ul>
+          </div>
+        </Container>
+      </section>
+    </IntersectionObserver>
   </IntersectionObserver>
 
   <Teleport to="body">
@@ -99,12 +101,18 @@
     if (!isUserOptedOut.value) matomo.value?.trackEvent('Modal', 'Close');
     selectedWork.value = undefined;
   }
-  const callback: IntersectionObserverCallback = (entries) => {
-    entries.forEach((entry) => {
-      const { isIntersecting } = entry;
-
+  const closeIoCallback: IntersectionObserverCallback = (entries) => {
+    entries.forEach(({ isIntersecting }) => {
       if (isIntersecting) {
         changeActiveSection('work');
+        if (!isUserOptedOut.value) matomo.value?.trackEvent('Section Viewed', 'Work');
+      }
+    });
+  };
+  const farIoCallback: IntersectionObserverCallback = (entries) => {
+    entries.forEach(({ isIntersecting }) => {
+      if (isIntersecting) {
+        workRef.value.classList.remove('hidden-section');
       }
     });
   };
@@ -112,6 +120,8 @@
 
 <style lang="postcss">
   .samples {
+    transition: all 0.3s ease-out;
+
     &__heading {
       display: inline-block;
       margin-bottom: 1.5rem;

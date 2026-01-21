@@ -75,6 +75,11 @@ body {
   z-index: 2;
 }
 
+.hidden-section {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
 section[id] {
   scroll-margin-top: var(--header-height, 0);
 }
