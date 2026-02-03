@@ -70,6 +70,9 @@ export default defineConfig({
           name: 'react_app',
         },
       },
+      dts: {
+        tsConfigPath: './tsconfig.app.json',
+      },
     }),
   ],
   resolve: {

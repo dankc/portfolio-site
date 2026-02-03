@@ -40,7 +40,7 @@
   import Footer from '@/components/Footer.vue';
   import Loading from '@/views/Loading.vue';
 
-  const { go } = useRouter();
+  const { go, currentRoute } = useRouter();
   const matomo = useMatomo();
   const { headerHeight, footerHeight } = storeToRefs(useGlobalStore());
   const { setMeta } = useMeta();
@@ -63,7 +63,7 @@
   });
 
   onErrorCaptured((error, vm, info) => {
-    matomo.value?.trackEvent('Site Health', 'Error', 'Error captured in App.vue');
+    matomo.value?.trackEvent('Site Health', 'Error', `Error captured in App.vue with path: ${currentRoute.value.fullPath}`);
     fetchError.value = error.message || 'An error occurred while fetching page data';
     console.error('Error captured:', error);
     console.error('Vue component:', vm);
