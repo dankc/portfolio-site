@@ -30,6 +30,12 @@ working-files
 
 *.tsbuildinfo
 
+.stylelintcache
+
+# Module Federation
+@mf-types
+.__mf__temp
+
 # Doing more with Apache, time to omit it
 .htaccess
 
